@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Install project dependencies
+    - name: Install
       run: npm i
-    - name: Build prod
+    - name: Build
       run: npx ng build --prod --base-href "https://makimenko.github.io/vect/" --output-path ./dist/gh-pages-deploy
-    - name: Upload build
+    - name: Upload
       uses: actions/upload-artifact@v1
       with:
         name: spa
@@ -25,7 +25,7 @@ jobs:
     needs: [build]
     if: github.ref == 'refs/heads/main'
     steps:
-      - name: Download spa
+      - name: Download
         uses: actions/download-artifact@v1
         with:
           name: spa
@@ -33,6 +33,5 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: gh-pages
