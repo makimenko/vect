@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-// import { AnimationService } from 'atft';
+import { AnimationService } from 'atft';
 
 @Component({
   selector: 'app-editor-canvas',
@@ -9,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditorCanvasComponent implements OnInit {
 
-  //constructor(private animation: AnimationService) {
-  //  this.animation.start();
-  //}
+  constructor(private animation: AnimationService) {
+    this.animation.start();
+  }
 
   ngOnInit(): void {
   }

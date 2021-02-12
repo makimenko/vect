@@ -9,13 +9,13 @@ import {EditorContentComponent} from './editor-content/editor-content.component'
 import {EditorLayoutComponent} from './editor-layout/editor-layout.component';
 import {EditorSideComponent} from './editor-side/editor-side.component';
 import {EditorToolbarComponent} from './editor-toolbar/editor-toolbar.component';
-// import {AnimationService, AtftModule, RendererService, StatsService, AtftDataCenterActorModule} from 'atft';
+import {AnimationService, AtftModule, RendererService, StatsService, AtftDataCenterActorModule} from 'atft';
 
 @NgModule({
   imports: [
     CommonModule,
-    // AtftModule,
-    // AtftDataCenterActorModule,
+    AtftModule,
+    AtftDataCenterActorModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
@@ -34,9 +34,9 @@ import {EditorToolbarComponent} from './editor-toolbar/editor-toolbar.component'
     EditorToolbarComponent
   ],
   providers: [
-    // AnimationService,
-    // RendererService,
-    // StatsService
+    AnimationService,
+    RendererService,
+    StatsService
   ]
 })
 export class EditorModule {
