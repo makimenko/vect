@@ -1,0 +1,18 @@
+@import '../../../../node_modules/@angular/material/theming';
+
+mat-card {
+  text-align: center;
+}
+
+ōmat-card:hover {
+  @include mat-elevation(15);
+}
+
+mat-card-content {
+  padding: 15px;
+}
+
+mat-card > img {
+  max-width: 100px;
+  //max-height:50%;
+}

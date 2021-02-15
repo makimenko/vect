@@ -1,0 +1,13 @@
+<mat-card class="mat-elevation-z4">
+  <mat-card-header>
+    <mat-card-title>{{item.name}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image src="./../assets/svg/sitemap-solid.svg">
+  <mat-card-content>
+    <p>{{item.description}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button routerLink="/editor/{{item.uuid}}">OPEN</button>
+    <button mat-button (click)="doDelete(item.uuid)">DELETE</button>
+  </mat-card-actions>
+</mat-card>

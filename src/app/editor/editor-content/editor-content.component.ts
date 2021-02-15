@@ -6,6 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./editor-content.component.scss']
 })
 export class EditorContentComponent {
-  @Input() initialDiagramSource: string;
+  @Input() uuid: string;
 
 }

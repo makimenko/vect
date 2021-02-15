@@ -1,0 +1,13 @@
+@import '../../../theme.scss';
+
+.content {
+  padding: 16px;
+  width: 100%;
+  height:100%;
+  background-color: mat-color($primary, 0.5);
+
+}
+
+.content > mat-card {
+  margin-bottom: 16px;
+}
