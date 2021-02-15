@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-editor-layout',
@@ -6,9 +7,14 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./editor-layout.component.scss']
 })
 export class EditorLayoutComponent implements OnInit {
-  @Input() initialDiagramSource: string;
 
-  constructor() {
+  uuid: string;
+
+  constructor(protected activatedRoute: ActivatedRoute) {
+    this.activatedRoute.paramMap.subscribe(params => {
+      console.log('EditorLayoutComponent.activatedRoute');
+      this.uuid = params.get('uuid');
+    });
   }
 
   ngOnInit(): void {

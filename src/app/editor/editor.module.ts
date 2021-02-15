@@ -14,6 +14,7 @@ import {EditorLayoutComponent} from './editor-layout/editor-layout.component';
 import {EditorSideComponent} from './editor-side/editor-side.component';
 import {EditorToolbarComponent} from './editor-toolbar/editor-toolbar.component';
 import {AnimationService, AtftModule, RendererService, StatsService, AtftDataCenterActorModule} from 'atft';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {AnimationService, AtftModule, RendererService, StatsService, AtftDataCen
     MatFormFieldModule,
     MatInputModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   declarations: [
     EditorLayoutComponent,

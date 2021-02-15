@@ -1,5 +1,6 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {DiagramService} from '../../data-access/service/diagram.service';
 
 @Component({
   selector: 'app-editor-side',
@@ -8,7 +9,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class EditorSideComponent implements OnInit {
 
-  @Input() initialDiagramSource: string;
+  @Input() uuid: string;
 
   @Output()
   diagramSourceUpdated = new EventEmitter<string>();
@@ -17,12 +18,15 @@ export class EditorSideComponent implements OnInit {
     source: new FormControl('')
   });
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    protected fb: FormBuilder,
+    protected diagramService: DiagramService
+  ) {
   }
 
   ngOnInit(): void {
     this.diagramForm = this.fb.group({
-      source: this.initialDiagramSource
+      source: this.diagramService.get(this.uuid).diagramSource
     });
     setTimeout(i => {
       this.onSubmit();

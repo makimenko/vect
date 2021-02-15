@@ -1,0 +1,15 @@
+@import '../../../../node_modules/@angular/material/theming';
+
+mat-card {
+
+}
+
+mat-card:hover {
+  @include mat-elevation(15);
+}
+
+
+mat-card > img {
+  max-width:100px;
+  //max-height:50%;
+}
