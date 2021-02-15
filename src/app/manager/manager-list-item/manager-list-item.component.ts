@@ -17,4 +17,7 @@ export class ManagerListItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  doDelete(uuid: string): void {
+    console.log('DELETE', uuid);
+  }
 }
