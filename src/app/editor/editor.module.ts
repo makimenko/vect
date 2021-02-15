@@ -1,7 +1,11 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {EditorCanvasComponent} from './editor-canvas/editor-canvas.component';
@@ -19,7 +23,11 @@ import {AnimationService, AtftModule, RendererService, StatsService, AtftDataCen
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FlexLayoutModule,
+    ReactiveFormsModule
   ],
   declarations: [
     EditorLayoutComponent,

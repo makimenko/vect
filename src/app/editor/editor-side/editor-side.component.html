@@ -1,0 +1,9 @@
+<div fxLayout="column" fxFlexFill>
+  <form [formGroup]="diagramForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="source" fxFlex color="accent">
+      <mat-label>Diagram source code</mat-label>
+      <textarea matInput cdkTextareaAutosize formControlName="source"></textarea>
+      <button mat-button matSuffix type="submit" [disabled]="!diagramForm.valid">Save</button>
+    </mat-form-field>
+  </form>
+</div>

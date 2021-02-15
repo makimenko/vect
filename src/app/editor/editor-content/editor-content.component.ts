@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-editor-content',
@@ -6,5 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./editor-content.component.scss']
 })
 export class EditorContentComponent {
+  @Input() initialDiagramSource: string;
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AnimationService } from 'atft';
 
 @Component({
@@ -7,6 +7,10 @@ import { AnimationService } from 'atft';
   styleUrls: ['./editor-canvas.component.scss']
 })
 export class EditorCanvasComponent implements OnInit {
+
+  @Input() yaml = ``;
+
+  @Output() editorToggle = new EventEmitter<void>();
 
   constructor(private animation: AnimationService) {
     this.animation.start();
@@ -19,7 +23,7 @@ export class EditorCanvasComponent implements OnInit {
     console.log('mouseEnter');
   }
 
-  public click(): void{
+  public click(): void {
     console.log('click');
   }
 
