@@ -7,7 +7,9 @@ import {EditorModule} from './editor/editor.module';
 import {AppRoutingModule} from './app-routing.module';
 import {ManagerModule} from './manager/manager.module';
 import {DiagramService} from './data-access/service/diagram.service';
-
+import { AuthService } from './welcome/service/auth.service';
+import { LoggedInGuardService } from './welcome/service/logged-in-guard.service';
+import { WelcomeModule } from './welcome/welcome.module';
 
 @NgModule({
   imports: [
@@ -16,13 +18,16 @@ import {DiagramService} from './data-access/service/diagram.service';
     FormsModule,
     BrowserAnimationsModule,
     EditorModule,
-    ManagerModule
+    ManagerModule,
+    WelcomeModule
   ],
   declarations: [
     AppComponent
   ],
   providers: [
-    DiagramService
+    DiagramService,
+    AuthService,
+    LoggedInGuardService
   ],
   bootstrap: [
     AppComponent

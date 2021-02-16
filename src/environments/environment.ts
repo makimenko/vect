@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  GAPI_CLIENT_ID: '184061935960-2fr916k9fulm6soq6rromfe13sbldf1b.apps.googleusercontent.com'
 };
 
 /*
