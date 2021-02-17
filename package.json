@@ -23,6 +23,8 @@
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
+    "@types/gapi": "^0.0.39",
+    "@types/gapi.auth2": "^0.0.53",
     "atft": "^1.4.0",
     "dagre": "^0.8.5",
     "firebase": "^8.2.7",

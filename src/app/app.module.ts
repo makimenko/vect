@@ -7,9 +7,9 @@ import {EditorModule} from './editor/editor.module';
 import {AppRoutingModule} from './app-routing.module';
 import {ManagerModule} from './manager/manager.module';
 import {DiagramService} from './data-access/service/diagram.service';
-import { AuthService } from './welcome/service/auth.service';
-import { LoggedInGuardService } from './welcome/service/logged-in-guard.service';
-import { WelcomeModule } from './welcome/welcome.module';
+import { AuthService } from './general/service/auth.service';
+import { LoggedInGuardService } from './general/service/logged-in-guard.service';
+import { GeneralModule } from './general/general.module';
 
 @NgModule({
   imports: [
@@ -19,7 +19,7 @@ import { WelcomeModule } from './welcome/welcome.module';
     BrowserAnimationsModule,
     EditorModule,
     ManagerModule,
-    WelcomeModule
+    GeneralModule
   ],
   declarations: [
     AppComponent
