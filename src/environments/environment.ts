@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  gapi: {
+    client_id: '184061935960-2fr916k9fulm6soq6rromfe13sbldf1b.apps.googleusercontent.com',
+    fetch_basic_profile: true,
+    scope: 'profile email',
+    ux_mode: 'redirect',
+    redirect_uri: 'http://localhost:4200'
+  }
 };
 
 /*
