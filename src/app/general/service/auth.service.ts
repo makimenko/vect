@@ -11,8 +11,8 @@ export class AuthService {
   private authInstance: any;
 
   private profile: BasicProfile;
-  private name: string;
-  private email: string;
+  public name: string;
+  public email: string;
 
 
   constructor() {

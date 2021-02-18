@@ -7,6 +7,10 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {ManagerListItemComponent} from './manager-list-item/manager-list-item.component';
 import {RouterModule} from '@angular/router';
+import { ManagerHomeComponent } from './manager-home/manager-home.component';
+import { ManagerPanelComponent } from './manager-panel/manager-panel.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -15,11 +19,15 @@ import {RouterModule} from '@angular/router';
     FlexLayoutModule,
     MatCardModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatSidenavModule,
+    MatInputModule
   ],
   declarations: [
     ManagerListComponent,
-    ManagerListItemComponent
+    ManagerListItemComponent,
+    ManagerHomeComponent,
+    ManagerPanelComponent
   ]
 })
 export class ManagerModule {
