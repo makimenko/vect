@@ -1,12 +1,12 @@
-<mat-card class="mat-elevation-z4">
-  <mat-card-header>
+<mat-card fxLayout="column" fxLayoutAlign="space-around center">
+  <mat-card-header fxFlex="10">
     <mat-card-title>{{item.name}}</mat-card-title>
   </mat-card-header>
-  <img mat-card-image src="assets/svg/sitemap-solid.svg">
-  <mat-card-content>
-    <p>{{item.description}}</p>
+  <mat-card-content fxFlex="30"  fxLayout="column">
+    <img [src]="item.image" fxFill>
+    <p class="description" fxFill>{{item.description}}</p>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions fxFlex="10">
     <button mat-button routerLink="/editor/{{item.uuid}}">OPEN</button>
     <button mat-button (click)="doDelete(item.uuid)">DELETE</button>
   </mat-card-actions>
