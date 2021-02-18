@@ -1,6 +1,8 @@
-<atft-map-controls #controls rotateSpeed=0 zoomSpeed=1.2 [dampingFactor]="0.1" [enableDamping]="true" [autoRotate]="false">
+<atft-map-controls #controls
+                   rotateSpeed=0 zoomSpeed=1.2 [dampingFactor]="0.1" [enableDamping]="true"
+                   [autoRotate]="false" [minZoom]="3" [maxZoom]="12">
   <atft-renderer-canvas>
-    <atft-orthographic-camera [positionX]=positionX [positionY]=-50 [positionZ]="100" [zoom]="6" [zAxisUp]="true">
+    <atft-orthographic-camera [positionX]=positionX [positionY]=-50 [positionZ]="100" [zoom]=6 [zAxisUp]="true">
     </atft-orthographic-camera>
 
     <atft-scene name="scene" background="0xa0a0a0">
