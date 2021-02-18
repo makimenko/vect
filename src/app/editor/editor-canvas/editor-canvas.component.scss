@@ -6,9 +6,18 @@ button {
 
 }
 
-.editor-btn {
+.btn {
+  z-index: 3;
   position: absolute;
+}
+
+.top-left {
   top: 5px;
   left: 5px;
-  z-index: 3;
 }
+
+.bottom-left {
+  bottom: 5px;
+  left: 5px;
+}
+

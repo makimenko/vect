@@ -3,7 +3,8 @@
     <mat-form-field class="source" fxFlex color="accent">
       <mat-label>Diagram source code</mat-label>
       <textarea matInput cdkTextareaAutosize formControlName="source"></textarea>
-      <button mat-button matSuffix type="submit" [disabled]="!diagramForm.valid">Save</button>
+      <button mat-button matSuffix type="submit" [disabled]="!diagramForm.valid">Save
+        <mat-hint>Ctrl+Enter</mat-hint></button>
     </mat-form-field>
   </form>
 </div>

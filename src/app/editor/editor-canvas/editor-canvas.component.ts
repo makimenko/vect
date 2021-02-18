@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AnimationService } from 'atft';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AnimationService, MapControlsComponent} from 'atft';
 
 @Component({
   selector: 'app-editor-canvas',
@@ -10,7 +10,10 @@ export class EditorCanvasComponent implements OnInit {
 
   @Input() yaml = ``;
 
+  @ViewChild('controls') controls: MapControlsComponent;
+
   @Output() editorToggle = new EventEmitter<void>();
+  positionX = 15;
 
   constructor(private animation: AnimationService) {
     this.animation.start();
@@ -31,4 +34,7 @@ export class EditorCanvasComponent implements OnInit {
     console.log('mouseExit');
   }
 
+  public center(): void {
+    this.controls.reset();
+  }
 }
