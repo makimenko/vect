@@ -19,6 +19,10 @@
     "lib": [
       "es2018",
       "dom"
+    ],
+    "types": [
+      "gapi.auth2",
+      "gapi.client.drive"
     ]
   },
   "angularCompilerOptions": {

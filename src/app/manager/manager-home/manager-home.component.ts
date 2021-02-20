@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DiagramService} from '../../data-access/service/diagram.service';
+import {GoogleDriveService} from '../../data-access/service/google-drive.service';
 
 @Component({
   selector: 'app-manager-home',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManagerHomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    protected drive: GoogleDriveService
+  ) {
+  }
 
   ngOnInit(): void {
+    this.drive.test();
   }
 
 }

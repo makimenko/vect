@@ -26,8 +26,9 @@ export class ManagerListComponent implements OnInit {
   }
 
   refresh(): void {
-    this.items = this.diagramService.list();
+    this.diagramService.list().then(result => {
+      this.items = result;
+    });
   }
-
 
 }

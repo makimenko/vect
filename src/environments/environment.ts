@@ -7,7 +7,8 @@ export const environment = {
   gapi: {
     client_id: '184061935960-2fr916k9fulm6soq6rromfe13sbldf1b.apps.googleusercontent.com',
     fetch_basic_profile: true,
-    scope: 'profile email',
+    discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+    scope: 'profile email https://www.googleapis.com/auth/drive.file',
     ux_mode: 'redirect',
     redirect_uri: 'http://localhost:4200'
   }

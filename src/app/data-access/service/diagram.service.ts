@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DiagramItem} from '../model/diagram-item.model';
-
+import {GoogleDriveService, inCondition, keyCondition, MIME_FILE, MIME_FOLDER, QUERY_NOT_DELETED} from './google-drive.service';
+import {NewDiagramDialogData} from '../../manager/new-diagram-dialog/new-diagram-dialog.component';
 
 const mockYaml1 = `nodes:
   - name: spa
@@ -87,15 +88,51 @@ const mockList: Array<DiagramItem> = [
   standardDiagram
 ];
 
+const VECT_FOLDER_NAME = 'Vect';
+
+
 @Injectable()
 export class DiagramService {
 
-  constructor() {
+  private initialized = false;
+  private vectFolderId: string;
+
+  constructor(
+    protected drive: GoogleDriveService
+  ) {
   }
 
-  list(): Array<DiagramItem> {
-    // TODO: Implement
-    return mockList;
+  public async init(): Promise<void> {
+    if (!this.initialized) {
+      console.log('DiagramService.init');
+      this.vectFolderId = await this.drive.createIfAbsent(VECT_FOLDER_NAME, MIME_FOLDER);
+      this.initialized = true;
+    }
+  }
+
+  public async list(): Promise<Array<DiagramItem>> {
+    console.log('DiagramService.list');
+    await this.init();
+
+    const list = await this.drive.list([
+      QUERY_NOT_DELETED,
+      keyCondition('mimeType', MIME_FILE),
+      inCondition('parents', this.vectFolderId)
+    ]);
+    if (list.result?.files?.length > 0) {
+      console.log('DiagramService.list result', list.result.files);
+      return list.result.files.map(file => {
+        const item: DiagramItem = {
+          uuid: file.id,
+          name: file.name,
+          description: 'TODO',
+          diagramSource: ''
+        };
+        return item;
+      });
+    } else {
+      return [];
+    }
   }
 
   get(uuid: string): DiagramItem {
@@ -106,5 +143,18 @@ export class DiagramService {
     });
   }
 
+  public async create(diagram: NewDiagramDialogData): Promise<DiagramItem> {
+    console.log('DiagramService.create', diagram);
+    await this.init();
+
+    const uuid = await this.drive.create(diagram.name, MIME_FILE, this.vectFolderId);
+    return {
+      uuid,
+      name: diagram.name,
+      description: diagram.description,
+      diagramSource: ''
+    };
+
+  }
 
 }

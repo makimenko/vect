@@ -8,7 +8,7 @@ declare var gapi: any;
 export class AuthService {
 
   private gapiSetup = false;
-  private authInstance: any;
+  private authInstance: gapi.auth2.GoogleAuth;
 
   private profile: BasicProfile;
   public name: string;
@@ -30,7 +30,7 @@ export class AuthService {
     return pload.then(async () => {
       await gapi.auth2
         .init(environment.gapi)
-        .then(auth => {
+        .then((auth) => {
           this.gapiSetup = true;
           this.authInstance = auth;
         });

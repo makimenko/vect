@@ -11,6 +11,7 @@ import { AuthService } from './general/service/auth.service';
 import { LoggedInGuardService } from './general/service/logged-in-guard.service';
 import { GeneralModule } from './general/general.module';
 import {UserPreferenceService} from './general/service/user-preference.service';
+import {GoogleDriveService} from './data-access/service/google-drive.service';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import {UserPreferenceService} from './general/service/user-preference.service';
     DiagramService,
     AuthService,
     LoggedInGuardService,
-    UserPreferenceService
+    UserPreferenceService,
+    GoogleDriveService
   ],
   bootstrap: [
     AppComponent

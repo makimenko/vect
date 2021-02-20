@@ -11,6 +11,9 @@ import { ManagerHomeComponent } from './manager-home/manager-home.component';
 import { ManagerPanelComponent } from './manager-panel/manager-panel.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatInputModule} from '@angular/material/input';
+import { NewDiagramDialogComponent } from './new-diagram-dialog/new-diagram-dialog.component';
+import {FormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -21,13 +24,16 @@ import {MatInputModule} from '@angular/material/input';
     MatButtonModule,
     RouterModule,
     MatSidenavModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule,
+    MatDialogModule
   ],
   declarations: [
     ManagerListComponent,
     ManagerListItemComponent,
     ManagerHomeComponent,
-    ManagerPanelComponent
+    ManagerPanelComponent,
+    NewDiagramDialogComponent
   ]
 })
 export class ManagerModule {
