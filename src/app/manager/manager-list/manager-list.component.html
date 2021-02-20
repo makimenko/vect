@@ -1,5 +1,9 @@
 <div class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
   <div class="list-item" [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of items">
-    <app-manager-list-item [item]="item"></app-manager-list-item>
+    <app-manager-list-item
+      [item]="item"
+      (loadingEvent)="loadingEvent.emit($event)"
+      (reloadRequired)="refresh()"
+    ></app-manager-list-item>
   </div>
 </div>

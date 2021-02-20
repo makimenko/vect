@@ -9,6 +9,8 @@ import {GoogleDriveService} from '../../data-access/service/google-drive.service
 })
 export class ManagerHomeComponent implements OnInit {
 
+  loading = true;
+
   constructor(
     protected drive: GoogleDriveService
   ) {

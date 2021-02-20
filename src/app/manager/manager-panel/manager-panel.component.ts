@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {AuthService} from '../../general/service/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {NewDiagramDialogComponent} from '../new-diagram-dialog/new-diagram-dialog.component';
@@ -11,6 +11,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./manager-panel.component.scss']
 })
 export class ManagerPanelComponent implements OnInit {
+
+  @Output() loadingEvent = new EventEmitter<boolean>();
 
   constructor(
     public auth: AuthService,
@@ -32,9 +34,11 @@ export class ManagerPanelComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.loadingEvent.emit(true);
         this.diagramService.create(result).then((newDiagram) => {
           console.log('ManagerPanelComponent.createNewDiagram created', newDiagram);
           this.router.navigate(['/editor', newDiagram.id]);
+          this.loadingEvent.emit(false);
         });
 
       }

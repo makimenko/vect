@@ -14,20 +14,22 @@ import {MatInputModule} from '@angular/material/input';
 import { NewDiagramDialogComponent } from './new-diagram-dialog/new-diagram-dialog.component';
 import {FormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FlexLayoutModule,
-    MatCardModule,
-    MatButtonModule,
-    RouterModule,
-    MatSidenavModule,
-    MatInputModule,
-    FormsModule,
-    MatDialogModule
-  ],
+    imports: [
+        CommonModule,
+        FlexLayoutModule,
+        MatCardModule,
+        MatButtonModule,
+        RouterModule,
+        MatSidenavModule,
+        MatInputModule,
+        FormsModule,
+        MatDialogModule,
+        MatProgressBarModule
+    ],
   declarations: [
     ManagerListComponent,
     ManagerListItemComponent,

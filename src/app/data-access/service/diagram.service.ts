@@ -205,4 +205,11 @@ export class DiagramService {
   }
 
 
+  public async delete(id: string): Promise<void> {
+    console.log('DiagramService.delete', id);
+    await this.init();
+
+    await this.drive.delete(id);
+  }
+
 }

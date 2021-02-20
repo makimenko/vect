@@ -1,8 +1,11 @@
 <mat-drawer-container class="container">
   <mat-drawer mode="side" opened>
-    <app-manager-panel></app-manager-panel>
+    <app-manager-panel (loadingEvent)="loading = $event"></app-manager-panel>
   </mat-drawer>
   <mat-drawer-content>
-    <app-manager-list></app-manager-list>
+    <div class="progress">
+      <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    </div>
+    <app-manager-list (loadingEvent)="loading = $event"></app-manager-list>
   </mat-drawer-content>
 </mat-drawer-container>

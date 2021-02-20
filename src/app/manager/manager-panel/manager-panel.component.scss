@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 50px;
+  height: 100%;
 }
 
 .mat-form-field {
@@ -12,4 +13,12 @@
 .logo {
   font-size: xxx-large;
   margin-bottom: 70px;
+}
+
+.actions {
+  width:100%;
+}
+
+button {
+  width: 100%;
 }

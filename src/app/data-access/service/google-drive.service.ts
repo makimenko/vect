@@ -66,6 +66,7 @@ export class GoogleDriveService {
                           properties?: DiagramMetadata
   ): Promise<string> {
     console.log('GoogleDriveService.uploadFile');
+    await this.init();
 
     const file = new Blob([fileContent], {type: mimeType});
     const metadata = {
@@ -80,7 +81,7 @@ export class GoogleDriveService {
     form.append('metadata', new Blob([JSON.stringify(metadata)], {type: 'application/json'}));
     form.append('file', file);
 
-    console.log('GoogleDriveService.uploadFile post');
+
     const response: any = await this.saveOfUpdate(id, form);
     console.log('GoogleDriveService.uploadFile response', response);
     return response.id;
@@ -89,6 +90,7 @@ export class GoogleDriveService {
   private async saveOfUpdate(id: string, form: FormData): Promise<any> {
     if (id) {
       // Update existing file:
+      console.log('GoogleDriveService.uploadFile (update existing)');
       const endpoint = 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?uploadType=multipart&fields=id';
       return this.http.patch(endpoint, form, {
         headers: {
@@ -97,7 +99,8 @@ export class GoogleDriveService {
       }).toPromise();
     } else {
       // Create new file
-      const endpoint = 'https://www.googleapis.com/upload/drive/v3/filesuploadType=multipart&fields=id';
+      console.log('GoogleDriveService.uploadFile (create new)');
+      const endpoint = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id';
       return this.http.post(endpoint, form, {
         headers: {
           Authorization: this.auth.getAuthorizationHeader()
@@ -177,6 +180,16 @@ export class GoogleDriveService {
       return Promise.reject('File not found');
     }
   }
+
+  public async delete(id: string): Promise<void> {
+    console.log('GoogleDriveService.delete', id);
+    await this.init();
+
+    await gapi.client.drive.files.delete({
+      fileId: id
+    });
+  }
+
 
   public async test(): Promise<void> {
     console.log('GoogleDriveService.test');

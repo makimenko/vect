@@ -1,13 +1,16 @@
-<span class="logo">Vect</span>
+<div class="logo" fxFlex="10">Vect</div>
+<div class="actions" fxFlex="70">
+  <button mat-raised-button (click)="createNewDiagram()" color="primary">Create New Diagram</button>
+</div>
+<form fxFlex="10">
+  <mat-form-field>
+    <mat-label>User Name</mat-label>
+    <input matInput [value]="auth.name" readonly>
+  </mat-form-field>
 
-<mat-form-field>
-  <mat-label>User Name</mat-label>
-  <input matInput [value]="auth.name" readonly>
-</mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput [value]="auth.email" readonly>
+  </mat-form-field>
+</form>
 
-<mat-form-field>
-  <mat-label>Email</mat-label>
-  <input matInput [value]="auth.email" readonly>
-</mat-form-field>
-
-<button mat-button (click)="createNewDiagram()">Create New Diagram</button>
