@@ -1,10 +1,17 @@
 <div fxLayout="column" fxFlexFill>
+  <div class="progress">
+    <mat-progress-bar *ngIf="showProgress" mode="indeterminate"></mat-progress-bar>
+  </div>
+
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field class="source" fxFlex color="accent">
       <mat-label>Diagram source code</mat-label>
       <textarea matInput cdkTextareaAutosize formControlName="diagramSource"></textarea>
       <button mat-button matSuffix type="submit" [disabled]="!form.valid">Save
-        <mat-hint>Ctrl+Enter</mat-hint></button>
+        <mat-hint>Ctrl+Enter</mat-hint>
+      </button>
     </mat-form-field>
   </form>
+
+
 </div>

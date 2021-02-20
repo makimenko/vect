@@ -15,6 +15,7 @@ import {EditorSideComponent} from './editor-side/editor-side.component';
 import {EditorToolbarComponent} from './editor-toolbar/editor-toolbar.component';
 import {AnimationService, AtftModule, RendererService, StatsService, AtftDataCenterActorModule} from 'atft';
 import {RouterModule} from '@angular/router';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import {RouterModule} from '@angular/router';
     MatInputModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MatProgressBarModule
   ],
   declarations: [
     EditorLayoutComponent,
