@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuthService} from '../../general/service/auth.service';
 import {HttpClient} from '@angular/common/http';
+import {DiagramMetadata} from '../model/diagram-item.model';
 
 declare let gapi: any;
 
@@ -56,18 +57,24 @@ export class GoogleDriveService {
     await this.init();
 
     return gapi.client.drive.files.list({
-      q: query.join(AND)
+      q: query.join(AND),
+      fields: '*'
     });
   }
 
-  public async createWithContent(name: string, mimeType: string, parent?: string, fileContent?: string): Promise<string> {
+  public async createWithContent(name: string, mimeType: string,
+                                 parent?: string, fileContent?: string,
+                                 appProperties?: DiagramMetadata
+  ): Promise<string> {
     console.log('GoogleDriveService.createWithContent');
     const endpoint = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id';
     const file = new Blob([fileContent], {type: mimeType});
     const metadata = {
       name,
       mimeType,
-      parents: [parent]
+      parents: [parent],
+      description: 'standard description',
+      appProperties
     };
 
     const form = new FormData();
@@ -141,15 +148,7 @@ export class GoogleDriveService {
   public async test(): Promise<void> {
     console.log('GoogleDriveService.test');
 
-    // const folderList = await this.list([QUERY_NOT_DELETED, QUERY_FOLDERS]);
-    // console.log(folderList.result.files);
-
-    // const id = await this.createIfAbsent('Vect', MIME_FOLDER);
-    // console.log('This is the file id', id);
-
-    await this.init();
-
-    await this.readFile('1ChtpIUlpoGb6il3i3l1-zw-5lHpa5-OQ');
+    // await this.readFile('1ChtpIUlpoGb6il3i3l1-zw-5lHpa5-OQ');
 
   }
 

@@ -3,12 +3,15 @@ export interface DiagramFile {
   name: string;
 }
 
-export interface DiagramFileContent {
+export interface DiagramMetadata {
   image?: string;
   description?: string;
+}
+
+export interface DiagramFileContent {
   diagramSource?: string;
 }
 
-export interface DiagramItem extends DiagramFile, DiagramFileContent {
+export interface DiagramItem extends DiagramFile, DiagramMetadata, DiagramFileContent {
 
 }

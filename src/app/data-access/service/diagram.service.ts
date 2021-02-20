@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {DiagramFileContent, DiagramItem} from '../model/diagram-item.model';
+import {DiagramFileContent, DiagramItem, DiagramMetadata} from '../model/diagram-item.model';
 import {eqCondition, GoogleDriveService, inCondition, MIME_DIAGRAM_FILE, MIME_FOLDER, QUERY_NOT_DELETED} from './google-drive.service';
 import {NewDiagramDialogData} from '../../manager/new-diagram-dialog/new-diagram-dialog.component';
 import * as yaml from 'yaml';
@@ -121,37 +121,26 @@ export class DiagramService {
       eqCondition('mimeType', MIME_DIAGRAM_FILE),
       inCondition('parents', this.vectFolderId)
     ]);
+    console.log('DiagramService.list response', list);
 
-    // Get details
-    const result = new Array<DiagramItem>();
-    if (list.result?.files?.length > 0) {
-      console.log('DiagramService.list result', list.result.files);
-      for (const file of list.result.files) {
-        try {
-          const fileContent = await this.get(file.id);
-          const item: DiagramItem = {
-            id: file.id,
-            name: file.name,
-            image: fileContent.image,
-            description: fileContent.description
-          };
-          result.push(item);
-        } catch (e) {
-          console.warn('Unable to read and parse YAML file', file.id);
-        }
+    return await list.result.files.map(file => {
+      console.log('DiagramService.list map', file);
+      const item: DiagramItem = {
+        id: file.id,
+        name: file.name,
+        image: file.appProperties?.image,
+        description: file.appProperties?.description
+      };
+      return item;
+    });
 
-      }
-    }
-    return result;
   }
 
   public async get(id: string): Promise<DiagramItem> {
     console.log('DiagramService.readFile', id);
     // TODO: Implement
     const fileContent = await this.drive.readFile(id);
-
     const item: DiagramItem = yaml.parse(fileContent);
-
     return item;
   }
 
@@ -159,9 +148,11 @@ export class DiagramService {
     console.log('DiagramService.create', diagram);
     await this.init();
 
-    const diagramFile: DiagramFileContent = {
+    const appProperties: DiagramMetadata = {
       description: diagram.description,
       image: 'assets/svg/sitemap-solid.svg',
+    };
+    const diagramFile: DiagramFileContent = {
       diagramSource: ''
     };
     const content = yaml.stringify(diagramFile);
@@ -171,7 +162,8 @@ export class DiagramService {
       diagram.name,
       MIME_DIAGRAM_FILE,
       this.vectFolderId,
-      content
+      content,
+      appProperties
     );
 
     return {
