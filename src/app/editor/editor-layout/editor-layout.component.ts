@@ -8,12 +8,12 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class EditorLayoutComponent implements OnInit {
 
-  uuid: string;
+  id: string;
 
   constructor(protected activatedRoute: ActivatedRoute) {
     this.activatedRoute.paramMap.subscribe(params => {
       console.log('EditorLayoutComponent.activatedRoute');
-      this.uuid = params.get('uuid');
+      this.id = params.get('id');
     });
   }
 

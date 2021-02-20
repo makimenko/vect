@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {DiagramItem} from '../model/diagram-item.model';
-import {GoogleDriveService, inCondition, keyCondition, MIME_FILE, MIME_FOLDER, QUERY_NOT_DELETED} from './google-drive.service';
+import {DiagramFileContent, DiagramItem} from '../model/diagram-item.model';
+import {eqCondition, GoogleDriveService, inCondition, MIME_DIAGRAM_FILE, MIME_FOLDER, QUERY_NOT_DELETED} from './google-drive.service';
 import {NewDiagramDialogData} from '../../manager/new-diagram-dialog/new-diagram-dialog.component';
+import * as yaml from 'yaml';
 
 const mockYaml1 = `nodes:
   - name: spa
@@ -34,8 +35,8 @@ edges:
     to: db3
 `;
 
-const standardDiagram = {
-  uuid: '3',
+const standardDiagram: DiagramItem = {
+  id: '3',
   name: 'Multi DB',
   image: 'assets/svg/sitemap-solid.svg',
   description: 'Super long description of diagram bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla',
@@ -44,14 +45,14 @@ const standardDiagram = {
 
 const mockList: Array<DiagramItem> = [
   {
-    uuid: '1',
+    id: '1',
     name: 'Simple',
     image: 'assets/img/sample-chart.png',
     description: 'Example of SPA-API-DB architecture',
     diagramSource: mockYaml1
   },
   {
-    uuid: '2',
+    id: '2',
     name: 'Multi DB',
     image: 'assets/svg/upload.svg',
     description: 'Multiple Databases',
@@ -59,14 +60,14 @@ const mockList: Array<DiagramItem> = [
   },
   standardDiagram,
   {
-    uuid: '4',
+    id: '4',
     name: '',
     image: '',
     description: '',
     diagramSource: mockYaml2
   },
   {
-    uuid: '5',
+    id: '5',
     image: 'assets/svg/worldwide.svg',
     name: 'Super long description of diagram bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla',
     description: 'Test Test Test',
@@ -114,42 +115,67 @@ export class DiagramService {
     console.log('DiagramService.list');
     await this.init();
 
+    // Get list of files without details
     const list = await this.drive.list([
       QUERY_NOT_DELETED,
-      keyCondition('mimeType', MIME_FILE),
+      eqCondition('mimeType', MIME_DIAGRAM_FILE),
       inCondition('parents', this.vectFolderId)
     ]);
+
+    // Get details
+    const result = new Array<DiagramItem>();
     if (list.result?.files?.length > 0) {
       console.log('DiagramService.list result', list.result.files);
-      return list.result.files.map(file => {
-        const item: DiagramItem = {
-          uuid: file.id,
-          name: file.name,
-          description: 'TODO',
-          diagramSource: ''
-        };
-        return item;
-      });
-    } else {
-      return [];
+      for (const file of list.result.files) {
+        try {
+          const fileContent = await this.get(file.id);
+          const item: DiagramItem = {
+            id: file.id,
+            name: file.name,
+            image: fileContent.image,
+            description: fileContent.description
+          };
+          result.push(item);
+        } catch (e) {
+          console.warn('Unable to read and parse YAML file', file.id);
+        }
+
+      }
     }
+    return result;
   }
 
-  get(uuid: string): DiagramItem {
+  public async get(id: string): Promise<DiagramItem> {
+    console.log('DiagramService.readFile', id);
     // TODO: Implement
+    const fileContent = await this.drive.readFile(id);
 
-    return mockList.find(i => {
-      return i.uuid === uuid;
-    });
+    const item: DiagramItem = yaml.parse(fileContent);
+
+    return item;
   }
 
   public async create(diagram: NewDiagramDialogData): Promise<DiagramItem> {
     console.log('DiagramService.create', diagram);
     await this.init();
 
-    const uuid = await this.drive.create(diagram.name, MIME_FILE, this.vectFolderId);
+    const diagramFile: DiagramFileContent = {
+      description: diagram.description,
+      image: 'assets/svg/sitemap-solid.svg',
+      diagramSource: ''
+    };
+    const content = yaml.stringify(diagramFile);
+    console.log('DiagramService.create stringify', content);
+
+    const id = await this.drive.createWithContent(
+      diagram.name,
+      MIME_DIAGRAM_FILE,
+      this.vectFolderId,
+      content
+    );
+
     return {
-      uuid,
+      id,
       name: diagram.name,
       description: diagram.description,
       diagramSource: ''

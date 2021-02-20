@@ -8,7 +8,7 @@ import {ManagerHomeComponent} from './manager/manager-home/manager-home.componen
 const routes: Routes = [
   // Mapping:
   {path: 'manager', component: ManagerHomeComponent, canActivate: [LoggedInGuardService]},
-  {path: 'editor/:uuid', component: EditorLayoutComponent, canActivate: [LoggedInGuardService]},
+  {path: 'editor/:id', component: EditorLayoutComponent, canActivate: [LoggedInGuardService]},
   // Redirection:
   {path: '', redirectTo: '/manager', pathMatch: 'full'},
   {path: '*', redirectTo: '/manager'},

@@ -7,7 +7,7 @@
     <p class="description" fxFill>{{item.description}}</p>
   </mat-card-content>
   <mat-card-actions fxFlex="10">
-    <button mat-button routerLink="/editor/{{item.uuid}}">OPEN</button>
-    <button mat-button (click)="doDelete(item.uuid)">DELETE</button>
+    <button mat-button routerLink="/editor/{{item.id}}">OPEN</button>
+    <button mat-button (click)="doDelete(item.id)">DELETE</button>
   </mat-card-actions>
 </mat-card>

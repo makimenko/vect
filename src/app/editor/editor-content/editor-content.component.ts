@@ -9,7 +9,7 @@ const KEY_SIDEBAR_OPENED = 'EditorContentComponent.sidePanelOpened';
   styleUrls: ['./editor-content.component.scss']
 })
 export class EditorContentComponent {
-  @Input() uuid: string;
+  @Input() id: string;
 
   public sidePanelOpened = this.pref.getBoolean(KEY_SIDEBAR_OPENED, false);
 

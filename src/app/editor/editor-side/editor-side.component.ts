@@ -9,7 +9,7 @@ import {DiagramService} from '../../data-access/service/diagram.service';
 })
 export class EditorSideComponent implements OnInit {
 
-  @Input() uuid: string;
+  @Input() id: string;
 
   @Output()
   diagramSourceUpdated = new EventEmitter<string>();
@@ -24,9 +24,10 @@ export class EditorSideComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const item = await this.diagramService.get(this.id);
     this.diagramForm = this.fb.group({
-      source: this.diagramService.get(this.uuid).diagramSource
+      source: item.diagramSource
     });
     setTimeout(i => {
       this.onSubmit();

@@ -33,6 +33,7 @@ export class AuthService {
         .then((auth) => {
           this.gapiSetup = true;
           this.authInstance = auth;
+          console.log('GAPI ', gapi.auth.getToken());
         });
     });
   }
@@ -73,6 +74,11 @@ export class AuthService {
     console.log('AuthService.retrieveProfile', this.profile);
     this.name = this.profile.getName();
     this.email = this.profile.getEmail();
+  }
+
+  public getAuthorizationHeader(): string {
+    const token = gapi.auth.getToken();
+    return token.token_type + ' ' + token.access_token;
   }
 
 }

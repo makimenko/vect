@@ -12,6 +12,7 @@ import { LoggedInGuardService } from './general/service/logged-in-guard.service'
 import { GeneralModule } from './general/general.module';
 import {UserPreferenceService} from './general/service/user-preference.service';
 import {GoogleDriveService} from './data-access/service/google-drive.service';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {GoogleDriveService} from './data-access/service/google-drive.service';
     BrowserAnimationsModule,
     EditorModule,
     ManagerModule,
-    GeneralModule
+    GeneralModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent

@@ -1,6 +1,6 @@
 <mat-drawer-container class="example-container" [hasBackdrop]="false">
   <mat-drawer #drawer mode="push" position="start" [opened]="sidePanelOpened">
-    <app-editor-side [uuid]="uuid" (diagramSourceUpdated)="diagram.yaml= $event"></app-editor-side>
+    <app-editor-side [id]="id" (diagramSourceUpdated)="diagram.yaml= $event"></app-editor-side>
   </mat-drawer>
   <mat-drawer-content>
     <app-editor-canvas #diagram (editorToggle)="toggleSidePanel()"></app-editor-canvas>
