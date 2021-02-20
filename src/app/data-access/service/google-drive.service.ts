@@ -47,7 +47,6 @@ export class GoogleDriveService {
     if (!this.initialized) {
       console.log('GoogleDriveService.init');
       await gapi.client.load('drive', 'v3');
-      // this.vectFolderId = await this.createIfAbsent(VECT_FOLDER_NAME, MIME_FOLDER);
       this.initialized = true;
     }
   }
@@ -62,34 +61,52 @@ export class GoogleDriveService {
     });
   }
 
-  public async createWithContent(name: string, mimeType: string,
-                                 parent?: string, fileContent?: string,
-                                 appProperties?: DiagramMetadata
+  public async uploadFile(id: string, name: string, mimeType: string,
+                          parent?: string, fileContent?: string,
+                          properties?: DiagramMetadata
   ): Promise<string> {
-    console.log('GoogleDriveService.createWithContent');
-    const endpoint = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id';
+    console.log('GoogleDriveService.uploadFile');
+
     const file = new Blob([fileContent], {type: mimeType});
     const metadata = {
       name,
       mimeType,
-      parents: [parent],
-      description: 'standard description',
-      appProperties
+      parents: (id ? undefined : [parent]),
+      properties
     };
+
 
     const form = new FormData();
     form.append('metadata', new Blob([JSON.stringify(metadata)], {type: 'application/json'}));
     form.append('file', file);
 
-    console.log('GoogleDriveService.createWithContent post');
-    const response: any = await this.http.post(endpoint, form, {
-      headers: {
-        Authorization: this.auth.getAuthorizationHeader()
-      }
-    }).toPromise();
-    console.log('GoogleDriveService.createWithContent response', response);
+    console.log('GoogleDriveService.uploadFile post');
+    const response: any = await this.saveOfUpdate(id, form);
+    console.log('GoogleDriveService.uploadFile response', response);
     return response.id;
   }
+
+  private async saveOfUpdate(id: string, form: FormData): Promise<any> {
+    if (id) {
+      // Update existing file:
+      const endpoint = 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?uploadType=multipart&fields=id';
+      return this.http.patch(endpoint, form, {
+        headers: {
+          Authorization: this.auth.getAuthorizationHeader()
+        }
+      }).toPromise();
+    } else {
+      // Create new file
+      const endpoint = 'https://www.googleapis.com/upload/drive/v3/filesuploadType=multipart&fields=id';
+      return this.http.post(endpoint, form, {
+        headers: {
+          Authorization: this.auth.getAuthorizationHeader()
+        }
+      }).toPromise();
+    }
+
+  }
+
 
   public async create(name: string, mimeType: string, parent?: string): Promise<string> {
     console.log('GoogleDriveService.create');
@@ -129,27 +146,41 @@ export class GoogleDriveService {
 
   }
 
-  public async readFile(id: string): Promise<string> {
-    console.log('GoogleDriveService.readFile', id);
+  public async readFileMeta(id: string): Promise<any> {
+    console.log('GoogleDriveService.readFileMeta', id);
+    await this.init();
+
     try {
-      const result = await gapi.client.drive.files.get({
+      const response = await gapi.client.drive.files.get({
         fileId: id,
-        alt: 'media'
+        fields: '*'
       });
-      console.log('result.body', result.body);
-      return result.body;
+      console.log('GoogleDriveService.readFileMeta result', response.result);
+      return response;
     } catch (e) {
-      console.warn('Can not read google file', id);
+      console.warn('Can not download google file', id);
       return Promise.reject('File not found');
     }
+  }
 
+  public async downloadFile(id: string): Promise<string> {
+    console.log('GoogleDriveService.downloadFile', id);
+    try {
+      const response = await gapi.client.drive.files.get({
+        fileId: id,
+        alt: 'media',
+        mimeType: MIME_DIAGRAM_FILE
+      });
+      return response.body;
+    } catch (e) {
+      console.warn('Can not download google file', id);
+      return Promise.reject('File not found');
+    }
   }
 
   public async test(): Promise<void> {
     console.log('GoogleDriveService.test');
-
-    // await this.readFile('1ChtpIUlpoGb6il3i3l1-zw-5lHpa5-OQ');
-
+    // await this.readFileMeta('1u-pb9bho85UTTcz9wzOgi1v6v2dasvXQ');
   }
 
 

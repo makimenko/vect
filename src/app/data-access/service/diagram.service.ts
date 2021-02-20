@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {DiagramFileContent, DiagramItem, DiagramMetadata} from '../model/diagram-item.model';
+import {DiagramItem, DiagramMetadata} from '../model/diagram-item.model';
 import {eqCondition, GoogleDriveService, inCondition, MIME_DIAGRAM_FILE, MIME_FOLDER, QUERY_NOT_DELETED} from './google-drive.service';
 import {NewDiagramDialogData} from '../../manager/new-diagram-dialog/new-diagram-dialog.component';
-import * as yaml from 'yaml';
 
 const mockYaml1 = `nodes:
   - name: spa
@@ -91,6 +90,15 @@ const mockList: Array<DiagramItem> = [
 
 const VECT_FOLDER_NAME = 'Vect';
 
+export function fileToDiagramItem(file: any): DiagramItem {
+  const item: DiagramItem = {
+    id: file.id,
+    name: file.name,
+    description: file.properties?.description,
+    image: file.properties?.image
+  };
+  return item;
+}
 
 @Injectable()
 export class DiagramService {
@@ -125,45 +133,46 @@ export class DiagramService {
 
     return await list.result.files.map(file => {
       console.log('DiagramService.list map', file);
-      const item: DiagramItem = {
-        id: file.id,
-        name: file.name,
-        image: file.appProperties?.image,
-        description: file.appProperties?.description
-      };
+      const item = fileToDiagramItem(file);
       return item;
     });
 
   }
 
   public async get(id: string): Promise<DiagramItem> {
-    console.log('DiagramService.readFile', id);
-    // TODO: Implement
-    const fileContent = await this.drive.readFile(id);
-    const item: DiagramItem = yaml.parse(fileContent);
+    console.log('DiagramService.get', id);
+    await this.init();
+
+    // Retrieve diagram meta information
+    const fileMeta = await this.drive.readFileMeta(id);
+    // console.log('DiagramService.get fileMeta', fileMeta.result);
+    const item = fileToDiagramItem(fileMeta.result);
+
+    // Download diagram content
+    const fileContent = await this.drive.downloadFile(id);
+    item.diagramSource = fileContent;
+
+    // console.log('DiagramService.get result', item);
     return item;
   }
+
 
   public async create(diagram: NewDiagramDialogData): Promise<DiagramItem> {
     console.log('DiagramService.create', diagram);
     await this.init();
 
-    const appProperties: DiagramMetadata = {
+    const properties: DiagramMetadata = {
       description: diagram.description,
       image: 'assets/svg/sitemap-solid.svg',
     };
-    const diagramFile: DiagramFileContent = {
-      diagramSource: ''
-    };
-    const content = yaml.stringify(diagramFile);
-    console.log('DiagramService.create stringify', content);
 
-    const id = await this.drive.createWithContent(
+    const id = await this.drive.uploadFile(
+      undefined,
       diagram.name,
       MIME_DIAGRAM_FILE,
       this.vectFolderId,
-      content,
-      appProperties
+      '',
+      properties
     );
 
     return {
@@ -174,5 +183,26 @@ export class DiagramService {
     };
 
   }
+
+
+  public async save(item: DiagramItem): Promise<void> {
+    console.log('DiagramService.save', item);
+    await this.init();
+
+    const properties: DiagramMetadata = {
+      description: item.description,
+      image: 'assets/svg/sitemap-solid.svg',
+    };
+
+    await this.drive.uploadFile(
+      item.id,
+      item.name,
+      MIME_DIAGRAM_FILE,
+      this.vectFolderId,
+      item.diagramSource,
+      properties
+    );
+  }
+
 
 }

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DiagramService} from '../../data-access/service/diagram.service';
+import {DiagramItem} from '../../data-access/model/diagram-item.model';
 
 @Component({
   selector: 'app-editor-side',
@@ -10,11 +11,12 @@ import {DiagramService} from '../../data-access/service/diagram.service';
 export class EditorSideComponent implements OnInit {
 
   @Input() id: string;
+  private item: DiagramItem;
 
   @Output()
-  diagramSourceUpdated = new EventEmitter<string>();
+  diagramSourceUpdated = new EventEmitter<DiagramItem>();
 
-  diagramForm = new FormGroup({
+  form = new FormGroup({
     source: new FormControl('')
   });
 
@@ -25,25 +27,51 @@ export class EditorSideComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const item = await this.diagramService.get(this.id);
-    this.diagramForm = this.fb.group({
-      source: item.diagramSource
-    });
-    setTimeout(i => {
-      this.onSubmit();
-    }, 100);
+    const emptyItem: DiagramItem = {
+      id: '',
+      name: '',
+      description: '',
+      diagramSource: '',
+      image: ''
+    };
+    this.form = this.fb.group(emptyItem);
+
+    await this.refresh();
   }
 
-  public onSubmit(): void {
+  protected async refresh(): Promise<void> {
+    this.item = await this.diagramService.get(this.id);
+    console.log('EditorSideComponent.refresh item', this.item);
+
+    this.form = this.fb.group(this.item);
+
+
+    setTimeout(i => {
+      this.diagramSourceUpdated.emit(this.item);
+    }, 100);
+
+  }
+
+  public async onSubmit(): Promise<void> {
     console.log('EditorSideComponent.onSubmit');
-    const diagramSource = this.diagramForm.get('source').value;
-    this.diagramSourceUpdated.emit(diagramSource);
+
+    const diagram: DiagramItem = {
+      id: this.item.id,
+      name: this.item.name,
+      description: this.item.description,
+      image: this.item.image,
+      diagramSource: this.form.get('diagramSource').value
+    };
+    console.log('EditorSideComponent.onSubmit value', diagram);
+
+    await this.diagramService.save(diagram);
+    await this.diagramSourceUpdated.emit(diagram);
   }
 
   @HostListener('window:keydown.control.enter', ['$event'])
   public shortCut(event: KeyboardEvent): void {
     event.preventDefault();
-    if (this.diagramForm.valid) {
+    if (this.form.valid) {
       this.onSubmit();
     }
   }
