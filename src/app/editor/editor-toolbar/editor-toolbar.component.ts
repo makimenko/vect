@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-editor-toolbar',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./editor-toolbar.component.scss']
 })
 export class EditorToolbarComponent implements OnInit {
+
+  @Input() loading = false;
 
   constructor() { }
 

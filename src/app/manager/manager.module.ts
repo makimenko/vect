@@ -12,24 +12,27 @@ import { ManagerPanelComponent } from './manager-panel/manager-panel.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatInputModule} from '@angular/material/input';
 import { NewDiagramDialogComponent } from './new-diagram-dialog/new-diagram-dialog.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FlexLayoutModule,
-        MatCardModule,
-        MatButtonModule,
-        RouterModule,
-        MatSidenavModule,
-        MatInputModule,
-        FormsModule,
-        MatDialogModule,
-        MatProgressBarModule
-    ],
+  imports: [
+    CommonModule,
+    FlexLayoutModule,
+    MatCardModule,
+    MatButtonModule,
+    RouterModule,
+    MatSidenavModule,
+    MatInputModule,
+    FormsModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatIconModule,
+    ReactiveFormsModule
+  ],
   declarations: [
     ManagerListComponent,
     ManagerListItemComponent,

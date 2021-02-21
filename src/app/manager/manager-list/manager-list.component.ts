@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DiagramService} from '../../data-access/service/diagram.service';
 import {DiagramItem} from '../../data-access/model/diagram-item.model';
 
@@ -17,7 +17,9 @@ export class ManagerListComponent implements OnInit {
   @Output() loadingEvent = new EventEmitter<boolean>();
 
 
-  constructor(protected diagramService: DiagramService) {
+  constructor(
+    protected diagramService: DiagramService
+  ) {
   }
 
   ngOnInit(): void {

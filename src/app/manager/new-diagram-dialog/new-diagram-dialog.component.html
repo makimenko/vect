@@ -1,17 +1,21 @@
-<h1 mat-dialog-title>New Diagram</h1>
-<div mat-dialog-content>
-  <p>Please provide basic information</p>
-  <mat-form-field>
-    <mat-label>Diagram name</mat-label>
-    <input matInput [(ngModel)]="data.name">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Diagram description</mat-label>
-    <textarea matInput [(ngModel)]="data.description"></textarea>
-  </mat-form-field>
-</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>New Diagram</h1>
+  <div mat-dialog-content>
+    <p>Please provide basic information</p>
+    <mat-form-field>
+      <mat-label>Diagram name</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="name.invalid">The name is mandatory and length should be 3-50 characters.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Diagram description</mat-label>
+      <textarea matInput formControlName="description" ></textarea>
+      <mat-error *ngIf="description.invalid">The max length is 100 characters</mat-error>
+    </mat-form-field>
+  </div>
 
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Create</button>
-  <button mat-button mat-dialog-close>Cancel</button>
-</div>
+  <div mat-dialog-actions>
+    <button mat-button [disabled]="!form.valid" type="submit" cdkFocusInitial>Create</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </div>
+</form>

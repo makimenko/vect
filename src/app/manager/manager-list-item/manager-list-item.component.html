@@ -1,13 +1,24 @@
-<mat-card fxLayout="column" fxLayoutAlign="space-around center">
+<mat-card
+  fxLayout="column"
+  fxLayoutAlign="space-around center"
+  (click)="open($event, item.id)"
+  @enterLeaveTrigger
+  [@itemState]="itemState"
+>
+
   <mat-card-header fxFlex="10">
     <mat-card-title>{{item.name}}</mat-card-title>
+    <button class="delete" mat-icon-button (click)="doDelete($event, item.id)">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
   </mat-card-header>
-  <mat-card-content fxFlex="30"  fxLayout="column">
-    <img [src]="item.image" fxFill>
-    <p class="description" fxFill>{{item.description}}</p>
+  <mat-card-content fxFlex="90" fxLayout="column">
+    <img [src]="item.image" fxFlex="70">
+    <p class="description" fxFlex="30">{{item.description}}</p>
   </mat-card-content>
+  <!--
   <mat-card-actions fxFlex="10">
     <button mat-button routerLink="/editor/{{item.id}}">OPEN</button>
-    <button mat-button (click)="doDelete(item.id)">DELETE</button>
   </mat-card-actions>
+  -->
 </mat-card>

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UserPreferenceService} from '../../general/service/user-preference.service';
 
 const KEY_SIDEBAR_OPENED = 'EditorContentComponent.sidePanelOpened';
@@ -10,6 +10,7 @@ const KEY_SIDEBAR_OPENED = 'EditorContentComponent.sidePanelOpened';
 })
 export class EditorContentComponent {
   @Input() id: string;
+  @Output() loadingEvent = new EventEmitter<boolean>();
 
   public sidePanelOpened = this.pref.getBoolean(KEY_SIDEBAR_OPENED, false);
 

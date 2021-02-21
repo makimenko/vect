@@ -16,10 +16,11 @@ export class EditorSideComponent implements OnInit {
   @Output()
   diagramSourceUpdated = new EventEmitter<DiagramItem>();
 
+  @Output() loadingEvent = new EventEmitter<boolean>();
+
   form = new FormGroup({
     source: new FormControl('')
   });
-  showProgress = true;
 
   constructor(
     protected fb: FormBuilder,
@@ -27,7 +28,7 @@ export class EditorSideComponent implements OnInit {
   ) {
   }
 
-  async ngOnInit(): Promise<void> {
+  public ngOnInit(): void {
     const emptyItem: DiagramItem = {
       id: '',
       name: '',
@@ -37,11 +38,14 @@ export class EditorSideComponent implements OnInit {
     };
 
     this.form = this.fb.group(emptyItem);
-    await this.refresh();
+    setTimeout(() => {
+      this.refresh();
+    }, 100);
+
   }
 
   protected async refresh(): Promise<void> {
-    this.showProgress = true;
+    this.loadingEvent.emit(true);
     this.item = await this.diagramService.get(this.id);
     console.log('EditorSideComponent.refresh item', this.item);
 
@@ -50,14 +54,14 @@ export class EditorSideComponent implements OnInit {
 
     setTimeout(i => {
       this.diagramSourceUpdated.emit(this.item);
-      this.showProgress = false;
+      this.loadingEvent.emit(false);
     }, 100);
 
   }
 
   public async onSubmit(): Promise<void> {
     console.log('EditorSideComponent.onSubmit');
-    this.showProgress = true;
+    this.loadingEvent.emit(true);
 
     const diagram: DiagramItem = {
       id: this.item.id,
@@ -70,7 +74,7 @@ export class EditorSideComponent implements OnInit {
 
     await this.diagramService.save(diagram);
     await this.diagramSourceUpdated.emit(diagram);
-    this.showProgress = false;
+    this.loadingEvent.emit(false);
   }
 
   @HostListener('window:keydown.control.enter', ['$event'])

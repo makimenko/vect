@@ -5,12 +5,26 @@ mat-card {
   text-align: center;
   @include mat-elevation(4);
   height: 250px;
-  padding-bottom: 20px;
+  padding: 20px;
+  cursor: pointer;
 }
 
 mat-card:hover {
-  @include mat-elevation(15);
+  @include mat-elevation(20);
+
+  mat-card-header {
+    button {
+      visibility: visible;
+    }
+  }
+
 }
+
+
+mat-card:active {
+  @include mat-elevation(1);
+}
+
 
 mat-card-title {
   white-space: nowrap;
@@ -29,5 +43,18 @@ mat-card-header {
 
 
 mat-card-content {
-  padding-bottom: 10px;
+  padding-top: 10px;
+  width: 100%;
+}
+
+.delete {
+  visibility: hidden;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 1;
+}
+
+.delete:hover {
+  @include mat-elevation(5);
 }

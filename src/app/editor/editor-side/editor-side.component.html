@@ -1,7 +1,4 @@
 <div fxLayout="column" fxFlexFill>
-  <div class="progress">
-    <mat-progress-bar *ngIf="showProgress" mode="indeterminate"></mat-progress-bar>
-  </div>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field class="source" fxFlex color="accent">
@@ -12,6 +9,5 @@
       </button>
     </mat-form-field>
   </form>
-
 
 </div>
