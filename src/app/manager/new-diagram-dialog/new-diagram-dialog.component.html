@@ -12,6 +12,14 @@
       <textarea matInput formControlName="description" ></textarea>
       <mat-error *ngIf="description.invalid">The max length is 100 characters</mat-error>
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Template</mat-label>
+      <mat-select>
+        <mat-option>Empty</mat-option>
+        <mat-option>Sample 1</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <div mat-dialog-actions>
