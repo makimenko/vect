@@ -1,10 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {TemplateService} from '../../data-access/service/template.service';
+import {DiagramFile} from '../../data-access/model/diagram-item.model';
 
 export interface NewDiagramDialogData {
   name: string;
   description: string;
+  template: DiagramFile;
 }
 
 @Component({
@@ -15,15 +18,18 @@ export interface NewDiagramDialogData {
 export class NewDiagramDialogComponent implements OnInit {
 
   public form: FormGroup;
+  public templates: Array<DiagramFile>;
 
   constructor(
     public dialogRef: MatDialogRef<NewDiagramDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: NewDiagramDialogData
+    @Inject(MAT_DIALOG_DATA) public data: NewDiagramDialogData,
+    protected templateService: TemplateService
   ) {
 
   }
 
   ngOnInit(): void {
+    this.templates = this.templateService.getTemplateList();
     this.form = new FormGroup({
       name: new FormControl('', [
         Validators.required,
@@ -32,9 +38,9 @@ export class NewDiagramDialogComponent implements OnInit {
       ]),
       description: new FormControl('', [
         Validators.maxLength(100)
-      ])
+      ]),
+      template: new FormControl()
     });
-
   }
 
   public onSubmit(): void {
@@ -47,6 +53,10 @@ export class NewDiagramDialogComponent implements OnInit {
 
   get description(): AbstractControl {
     return this.form.get('description');
+  }
+
+  get template(): AbstractControl {
+    return this.form.get('template');
   }
 
 }

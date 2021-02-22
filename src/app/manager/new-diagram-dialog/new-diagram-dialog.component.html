@@ -9,15 +9,15 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Diagram description</mat-label>
-      <textarea matInput formControlName="description" ></textarea>
+      <textarea matInput formControlName="description"></textarea>
       <mat-error *ngIf="description.invalid">The max length is 100 characters</mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Template</mat-label>
-      <mat-select>
-        <mat-option>Empty</mat-option>
-        <mat-option>Sample 1</mat-option>
+      <mat-select formControlName="template">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let template of templates" [value]="template">{{template.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

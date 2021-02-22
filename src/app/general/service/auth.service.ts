@@ -33,7 +33,7 @@ export class AuthService {
         .then((auth) => {
           this.gapiSetup = true;
           this.authInstance = auth;
-          console.log('GAPI ', gapi.auth.getToken());
+          // console.log('GAPI ', gapi.auth.getToken());
         });
     });
   }
@@ -59,7 +59,7 @@ export class AuthService {
 
     const signed = this.authInstance.isSignedIn.get();
     if (!signed) {
-      console.log('AuthService.checkIfUserAuthenticated --> redirect and wait for authentication');
+      // console.log('AuthService.checkIfUserAuthenticated --> redirect and wait for authentication');
       await this.authenticate();
     }
     // console.log('this.authInstance', this.authInstance);
@@ -71,7 +71,7 @@ export class AuthService {
 
   private retrieveProfile(): void {
     this.profile = this.authInstance.currentUser.get().getBasicProfile();
-    console.log('AuthService.retrieveProfile', this.profile);
+    // console.log('AuthService.retrieveProfile', this.profile);
     this.name = this.profile.getName();
     this.email = this.profile.getEmail();
   }

@@ -12,7 +12,7 @@ export class EditorLayoutComponent implements OnInit {
 
   constructor(protected activatedRoute: ActivatedRoute) {
     this.activatedRoute.paramMap.subscribe(params => {
-      console.log('EditorLayoutComponent.activatedRoute');
+      // console.log('EditorLayoutComponent.activatedRoute');
       this.id = params.get('id');
     });
   }

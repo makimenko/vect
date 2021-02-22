@@ -28,6 +28,10 @@ export function inCondition(key: string, value: string): string {
     .replace(/:2/i, value);
 }
 
+export interface CreateIfAbsentResult {
+  id: string;
+  created: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -45,14 +49,14 @@ export class GoogleDriveService {
 
   public async init(): Promise<void> {
     if (!this.initialized) {
-      console.log('GoogleDriveService.init');
+      // console.log('GoogleDriveService.init');
       await gapi.client.load('drive', 'v3');
       this.initialized = true;
     }
   }
 
   public async list(query: Array<string>): Promise<any> {
-    console.log('GoogleDriveService.list');
+    // console.log('GoogleDriveService.list');
     await this.init();
 
     return gapi.client.drive.files.list({
@@ -65,7 +69,7 @@ export class GoogleDriveService {
                           parent?: string, fileContent?: string,
                           properties?: DiagramMetadata
   ): Promise<string> {
-    console.log('GoogleDriveService.uploadFile');
+    // console.log('GoogleDriveService.uploadFile');
     await this.init();
 
     const file = new Blob([fileContent], {type: mimeType});
@@ -83,14 +87,14 @@ export class GoogleDriveService {
 
 
     const response: any = await this.saveOfUpdate(id, form);
-    console.log('GoogleDriveService.uploadFile response', response);
+    // console.log('GoogleDriveService.uploadFile response', response);
     return response.id;
   }
 
   private async saveOfUpdate(id: string, form: FormData): Promise<any> {
     if (id) {
       // Update existing file:
-      console.log('GoogleDriveService.uploadFile (update existing)');
+      // console.log('GoogleDriveService.uploadFile (update existing)');
       const endpoint = 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?uploadType=multipart&fields=id';
       return this.http.patch(endpoint, form, {
         headers: {
@@ -99,7 +103,7 @@ export class GoogleDriveService {
       }).toPromise();
     } else {
       // Create new file
-      console.log('GoogleDriveService.uploadFile (create new)');
+      // console.log('GoogleDriveService.uploadFile (create new)');
       const endpoint = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id';
       return this.http.post(endpoint, form, {
         headers: {
@@ -112,7 +116,7 @@ export class GoogleDriveService {
 
 
   public async create(name: string, mimeType: string, parent?: string): Promise<string> {
-    console.log('GoogleDriveService.create');
+    // console.log('GoogleDriveService.create', name);
     await this.init();
 
     let id: string;
@@ -120,19 +124,19 @@ export class GoogleDriveService {
       resource: {
         name,
         mimeType,
-        parents: [parent]
+        parents: (parent ? [parent] : undefined)
       }
     }).then((response) => {
       id = response.result.id;
     });
 
-    console.log('GoogleDriveService.create id', id);
+    // console.log('GoogleDriveService.create id', id);
     return id;
   }
 
 
-  public async createIfAbsent(name: string, mimeType: string): Promise<string> {
-    console.log('GoogleDriveService.createIfAbsent');
+  public async createIfAbsent(name: string, mimeType: string): Promise<CreateIfAbsentResult> {
+    // console.log('GoogleDriveService.createIfAbsent');
     await this.init();
     const search = await this.list([
       QUERY_NOT_DELETED,
@@ -141,16 +145,22 @@ export class GoogleDriveService {
     ]);
 
     if (search.result.files && search.result.files.length > 0) {
-      console.log('GoogleDriveService.createIfAbsent already exists', search.result.files[0].id);
-      return await search.result.files[0].id;
+      // console.log('GoogleDriveService.createIfAbsent already exists', search.result.files[0].id);
+      return {
+        id: await search.result.files[0].id,
+        created: false
+      };
     } else {
-      return await this.create(name, mimeType);
+      return {
+        id: await this.create(name, mimeType),
+        created: true
+      };
     }
 
   }
 
   public async readFileMeta(id: string): Promise<any> {
-    console.log('GoogleDriveService.readFileMeta', id);
+    // console.log('GoogleDriveService.readFileMeta', id);
     await this.init();
 
     try {
@@ -158,7 +168,7 @@ export class GoogleDriveService {
         fileId: id,
         fields: '*'
       });
-      console.log('GoogleDriveService.readFileMeta result', response.result);
+      // console.log('GoogleDriveService.readFileMeta result', response.result);
       return response;
     } catch (e) {
       console.warn('Can not download google file', id);
@@ -167,7 +177,7 @@ export class GoogleDriveService {
   }
 
   public async downloadFile(id: string): Promise<string> {
-    console.log('GoogleDriveService.downloadFile', id);
+    // console.log('GoogleDriveService.downloadFile', id);
     try {
       const response = await gapi.client.drive.files.get({
         fileId: id,
@@ -182,7 +192,7 @@ export class GoogleDriveService {
   }
 
   public async delete(id: string): Promise<void> {
-    console.log('GoogleDriveService.delete', id);
+    // console.log('GoogleDriveService.delete', id);
     await this.init();
 
     await gapi.client.drive.files.delete({
@@ -192,7 +202,7 @@ export class GoogleDriveService {
 
 
   public async test(): Promise<void> {
-    console.log('GoogleDriveService.test');
+    // console.log('GoogleDriveService.test');
     // await this.readFileMeta('1u-pb9bho85UTTcz9wzOgi1v6v2dasvXQ');
   }
 

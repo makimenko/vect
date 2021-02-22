@@ -23,15 +23,15 @@ export class EditorCanvasComponent implements OnInit {
   }
 
   public mouseEnter(): void {
-    console.log('mouseEnter');
+    // console.log('mouseEnter');
   }
 
   public click(): void {
-    console.log('click');
+    // console.log('click');
   }
 
   public mouseExit(): void {
-    console.log('mouseExit');
+    // console.log('mouseExit');
   }
 
   public center(): void {

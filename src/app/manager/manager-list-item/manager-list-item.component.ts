@@ -64,10 +64,10 @@ export class ManagerListItemComponent implements OnInit {
   }
 
   public async doDelete(event: any, id: string): Promise<void> {
-    console.log('ManagerListItemComponent.doDelete', id);
+    // console.log('ManagerListItemComponent.doDelete', id);
     this.itemState = State.warn;
 
-    console.log('ManagerListItemComponent.doDelete event', event);
+    // console.log('ManagerListItemComponent.doDelete event', event);
     event.stopPropagation();
 
     const confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -94,7 +94,7 @@ export class ManagerListItemComponent implements OnInit {
   }
 
   public open(event: any, id: string): void {
-    console.log('ManagerListItemComponent.open event', event);
+    // console.log('ManagerListItemComponent.open event', event);
     event.stopPropagation();
     this.itemState = State.clicked;
     setTimeout(() => {

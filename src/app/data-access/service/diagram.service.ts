@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {DiagramItem, DiagramMetadata} from '../model/diagram-item.model';
 import {eqCondition, GoogleDriveService, inCondition, MIME_DIAGRAM_FILE, MIME_FOLDER, QUERY_NOT_DELETED} from './google-drive.service';
 import {NewDiagramDialogData} from '../../manager/new-diagram-dialog/new-diagram-dialog.component';
+import {TemplateService} from './template.service';
 
 const VECT_FOLDER_NAME = 'Vect';
 
@@ -22,20 +23,32 @@ export class DiagramService {
   private vectFolderId: string;
 
   constructor(
-    protected drive: GoogleDriveService
+    protected drive: GoogleDriveService,
+    protected templateService: TemplateService
   ) {
   }
 
   public async init(): Promise<void> {
     if (!this.initialized) {
-      console.log('DiagramService.init');
-      this.vectFolderId = await this.drive.createIfAbsent(VECT_FOLDER_NAME, MIME_FOLDER);
+      // console.log('DiagramService.init');
+      const result = await this.drive.createIfAbsent(VECT_FOLDER_NAME, MIME_FOLDER);
+      if (result.created) {
+        // Generate sample diagrams (if user is newly joined):
+        for (const template of this.templateService.getTemplateList()) {
+          await this.create({
+            template,
+            name: template.name,
+            description: 'This diagram was automatically created from a template to demonstrate basic functionality'
+          });
+        }
+      }
+      this.vectFolderId = result.id;
       this.initialized = true;
     }
   }
 
   public async list(): Promise<Array<DiagramItem>> {
-    console.log('DiagramService.list');
+    // console.log('DiagramService.list');
     await this.init();
 
     // Get list of files without details
@@ -44,10 +57,10 @@ export class DiagramService {
       eqCondition('mimeType', MIME_DIAGRAM_FILE),
       inCondition('parents', this.vectFolderId)
     ]);
-    console.log('DiagramService.list response', list);
+    // console.log('DiagramService.list response', list);
 
     return await list.result.files.map(file => {
-      console.log('DiagramService.list map', file);
+      // console.log('DiagramService.list map', file);
       const item = fileToDiagramItem(file);
       return item;
     });
@@ -55,7 +68,7 @@ export class DiagramService {
   }
 
   public async get(id: string): Promise<DiagramItem> {
-    console.log('DiagramService.get', id);
+    // console.log('DiagramService.get', id);
     await this.init();
 
     // Retrieve diagram meta information
@@ -73,7 +86,7 @@ export class DiagramService {
 
 
   public async create(diagram: NewDiagramDialogData): Promise<DiagramItem> {
-    console.log('DiagramService.create', diagram);
+    // console.log('DiagramService.create', diagram);
     await this.init();
 
     const properties: DiagramMetadata = {
@@ -81,12 +94,14 @@ export class DiagramService {
       image: 'assets/svg/sitemap-solid.svg',
     };
 
+    const diagramSource = (diagram.template?.id ? this.templateService.getTemplate(diagram.template.id).diagramSource : '');
+
     const id = await this.drive.uploadFile(
       undefined,
       diagram.name,
       MIME_DIAGRAM_FILE,
       this.vectFolderId,
-      '',
+      diagramSource,
       properties
     );
 
@@ -101,7 +116,7 @@ export class DiagramService {
 
 
   public async save(item: DiagramItem): Promise<void> {
-    console.log('DiagramService.save', item);
+    // console.log('DiagramService.save', item);
     await this.init();
 
     const properties: DiagramMetadata = {
@@ -121,9 +136,8 @@ export class DiagramService {
 
 
   public async delete(id: string): Promise<void> {
-    console.log('DiagramService.delete', id);
+    // console.log('DiagramService.delete', id);
     await this.init();
-
     await this.drive.delete(id);
   }
 

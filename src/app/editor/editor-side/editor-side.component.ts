@@ -47,7 +47,7 @@ export class EditorSideComponent implements OnInit {
   protected async refresh(): Promise<void> {
     this.loadingEvent.emit(true);
     this.item = await this.diagramService.get(this.id);
-    console.log('EditorSideComponent.refresh item', this.item);
+    // console.log('EditorSideComponent.refresh item', this.item);
 
     this.form = this.fb.group(this.item);
 
@@ -60,7 +60,7 @@ export class EditorSideComponent implements OnInit {
   }
 
   public async onSubmit(): Promise<void> {
-    console.log('EditorSideComponent.onSubmit');
+    // console.log('EditorSideComponent.onSubmit');
     this.loadingEvent.emit(true);
 
     const diagram: DiagramItem = {
@@ -70,7 +70,7 @@ export class EditorSideComponent implements OnInit {
       image: this.item.image,
       diagramSource: this.form.get('diagramSource').value
     };
-    console.log('EditorSideComponent.onSubmit value', diagram);
+    // console.log('EditorSideComponent.onSubmit value', diagram);
 
     await this.diagramService.save(diagram);
     await this.diagramSourceUpdated.emit(diagram);
