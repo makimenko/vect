@@ -79,6 +79,7 @@ export class EditorSideComponent implements OnInit {
     this.saveInProgress = true;
     this.diagramService.save(diagram).then(() => {
       this.saveInProgress = false;
+      this.form.markAsPristine();
     });
     await this.diagramSourceUpdated.emit(diagram);
     this.loadingEvent.emit(false);
