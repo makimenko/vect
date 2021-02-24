@@ -18,6 +18,9 @@ export class EditorSideComponent implements OnInit {
 
   @Output() loadingEvent = new EventEmitter<boolean>();
 
+  initialized = false;
+  saveInProgress = false;
+
   form = new FormGroup({
     source: new FormControl('')
   });
@@ -51,8 +54,8 @@ export class EditorSideComponent implements OnInit {
 
     this.form = this.fb.group(this.item);
 
-
     setTimeout(i => {
+      this.initialized = true;
       this.diagramSourceUpdated.emit(this.item);
       this.loadingEvent.emit(false);
     }, 100);
@@ -72,7 +75,11 @@ export class EditorSideComponent implements OnInit {
     };
     // console.log('EditorSideComponent.onSubmit value', diagram);
 
-    await this.diagramService.save(diagram);
+
+    this.saveInProgress = true;
+    this.diagramService.save(diagram).then(() => {
+      this.saveInProgress = false;
+    });
     await this.diagramSourceUpdated.emit(diagram);
     this.loadingEvent.emit(false);
   }
