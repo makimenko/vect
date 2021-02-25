@@ -20,7 +20,7 @@
       </atft-point-light>
 
       <atft-dagre-layout>
-        <atft-dagre-yaml-parser [yaml]="yaml"></atft-dagre-yaml-parser>
+        <atft-dagre-yaml-parser (status)="diagramStatus.emit($event)" [yaml]="yaml"></atft-dagre-yaml-parser>
       </atft-dagre-layout>
     </atft-scene>
 

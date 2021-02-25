@@ -1,9 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxFlex>
-  <mat-form-field class="source" fxFlex color="accent">
+
+  <mat-form-field class="source" fxFlex color="accent" [@diagramStatus]="diagramStatus">
     <mat-label>Diagram source code</mat-label>
     <textarea matInput cdkTextareaAutosize formControlName="diagramSource" [readonly]="!initialized"></textarea>
   </mat-form-field>
-  <button mat-raised-button type="submit" [disabled]="!form.valid || saveInProgress || !initialized || !form.dirty" color="primary">Save
+  <mat-error matSuffix *ngIf="!diagramStatus">Error in diagram code</mat-error>
+  <button #submitButton mat-raised-button type="submit" [disabled]="!form.valid || saveInProgress || !initialized || !form.dirty" color="primary">Save
     <mat-hint>Ctrl+Enter</mat-hint>
     <mat-progress-bar *ngIf="saveInProgress" mode="buffer"></mat-progress-bar>
   </button>

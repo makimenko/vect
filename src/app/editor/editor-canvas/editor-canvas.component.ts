@@ -13,6 +13,9 @@ export class EditorCanvasComponent implements OnInit {
   @ViewChild('controls') controls: MapControlsComponent;
 
   @Output() editorToggle = new EventEmitter<void>();
+
+  @Output() diagramStatus = new EventEmitter<boolean>();
+
   positionX = 15;
 
   constructor(private animation: AnimationService) {
@@ -37,4 +40,5 @@ export class EditorCanvasComponent implements OnInit {
   public center(): void {
     this.controls.reset();
   }
+
 }

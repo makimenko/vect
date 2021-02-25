@@ -1,12 +1,32 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DiagramService} from '../../data-access/service/diagram.service';
 import {DiagramItem} from '../../data-access/model/diagram-item.model';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-editor-side',
   templateUrl: './editor-side.component.html',
-  styleUrls: ['./editor-side.component.scss']
+  styleUrls: ['./editor-side.component.scss'],
+  animations: [
+    trigger('diagramStatus', [
+      state('true', style({})),
+      state('false', style({
+        background: '#aa2b1d',
+        opacity: 0.7
+      })),
+      transition('true -> false', [
+        animate('200ms', style({
+          background: '#aa2b1d',
+          opacity: 0.7
+        }))
+      ]),
+      transition('true -> false', [
+        animate('600ms', style({background: 'blue'}))
+      ])
+    ])
+  ]
 })
 export class EditorSideComponent implements OnInit {
 
@@ -18,8 +38,11 @@ export class EditorSideComponent implements OnInit {
 
   @Output() loadingEvent = new EventEmitter<boolean>();
 
+  @ViewChild('submitButton') submitButton: MatButton;
+
   initialized = false;
   saveInProgress = false;
+  diagramStatus = true;
 
   form = new FormGroup({
     source: new FormControl('')
@@ -88,9 +111,14 @@ export class EditorSideComponent implements OnInit {
   @HostListener('window:keydown.control.enter', ['$event'])
   public shortCut(event: KeyboardEvent): void {
     event.preventDefault();
-    if (this.form.valid) {
-      this.onSubmit();
+    const button = this.submitButton._getHostElement();
+    if (!button.disabled) {
+      button.click();
     }
+  }
+
+  public processDiagramStatus(status: boolean): void {
+    this.diagramStatus = status;
   }
 
 }
