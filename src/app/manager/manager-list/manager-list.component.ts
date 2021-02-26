@@ -10,7 +10,7 @@ import {DiagramItem} from '../../data-access/model/diagram-item.model';
 })
 export class ManagerListComponent implements OnInit {
 
-  gridColumns = 4;
+  gridColumns = 3;
 
   items: Array<DiagramItem> = [];
 

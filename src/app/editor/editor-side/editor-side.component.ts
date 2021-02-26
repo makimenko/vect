@@ -7,6 +7,7 @@ import {MatButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {EditorHelpDialogComponent} from '../editor-help-dialog/editor-help-dialog.component';
 import {btnClick} from '../../general/utils/btnClick';
+import {MatDialogRef} from '@angular/material/dialog/dialog-ref';
 
 @Component({
   selector: 'app-editor-side',
@@ -44,6 +45,8 @@ export class EditorSideComponent implements OnInit {
 
   @ViewChild('submitButton') submitButton: MatButton;
   @ViewChild('helpButton') helpButton: MatButton;
+
+  private helpDialogRef: MatDialogRef<EditorHelpDialogComponent>;
 
   // tslint:disable-next-line:variable-name
   private _dirty = false;
@@ -143,7 +146,13 @@ export class EditorSideComponent implements OnInit {
   }
 
   public showHelp(): void {
-    const dialogRef = this.dialog.open(EditorHelpDialogComponent, {});
+    // Allows to open Help dialog only once
+    if (!this.helpDialogRef) {
+      this.helpDialogRef = this.dialog.open(EditorHelpDialogComponent, {});
+      this.helpDialogRef.afterClosed().subscribe((result) => {
+        this.helpDialogRef = undefined;
+      });
+    }
   }
 
 }
