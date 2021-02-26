@@ -5,12 +5,14 @@
     <textarea matInput cdkTextareaAutosize formControlName="diagramSource" [readonly]="!initialized"></textarea>
   </mat-form-field>
   <mat-error matSuffix *ngIf="!diagramStatus">Error in diagram code</mat-error>
-  <button #submitButton mat-raised-button type="submit" [disabled]="!form.valid || saveInProgress || !initialized || !form.dirty" color="primary">Save
+  <button #submitButton mat-raised-button type="submit"
+          [disabled]="!form.valid || saveInProgress || !initialized || !form.dirty"
+          color="primary" matTooltip="Save and redraw diagram (Ctrl+Enter)">Save
     <mat-hint>Ctrl+Enter</mat-hint>
     <mat-progress-bar *ngIf="saveInProgress" mode="buffer"></mat-progress-bar>
   </button>
 
-  <button class="help" mat-icon-button aria-label="Edit" (click)="showHelp()" type="button">
+  <button class="help" mat-icon-button aria-label="Edit" (click)="showHelp()" type="button" matTooltip="Help (Ctrl+H)">
     <mat-icon>help_outline</mat-icon>
   </button>
 

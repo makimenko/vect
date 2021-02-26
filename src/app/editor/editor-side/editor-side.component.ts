@@ -6,6 +6,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {EditorHelpDialogComponent} from '../editor-help-dialog/editor-help-dialog.component';
+import {btnClick} from '../../general/utils/btnClick';
 
 @Component({
   selector: 'app-editor-side',
@@ -112,12 +113,8 @@ export class EditorSideComponent implements OnInit {
   }
 
   @HostListener('window:keydown.control.enter', ['$event'])
-  public shortCut(event: KeyboardEvent): void {
-    event.preventDefault();
-    const button = this.submitButton._getHostElement();
-    if (!button.disabled) {
-      button.click();
-    }
+  public shortCutSave(event: KeyboardEvent): void {
+    btnClick(event, this.submitButton);
   }
 
   public processDiagramStatus(status: boolean): void {
@@ -125,9 +122,7 @@ export class EditorSideComponent implements OnInit {
   }
 
   public showHelp(): void {
-    const dialogRef = this.dialog.open(EditorHelpDialogComponent, {
-      // width: '350px',
-      // data: {}
-    });
+    const dialogRef = this.dialog.open(EditorHelpDialogComponent, {});
   }
+
 }

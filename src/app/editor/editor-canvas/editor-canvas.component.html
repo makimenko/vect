@@ -27,10 +27,12 @@
   </atft-renderer-canvas>
 </atft-map-controls>
 
-<button class="btn top-left" mat-icon-button aria-label="Edit" (click)="editorToggle.emit()">
+<button #buttonEditor class="btn top-left" mat-icon-button (click)="editorToggle.emit()"
+        matTooltip="Show/Hide diagram editor (Ctrl+E)">
   <mat-icon>create</mat-icon>
 </button>
 
-<button class="btn bottom-left" mat-icon-button aria-label="Center" (click)="center()">
+<button #buttonReset class="btn bottom-left" mat-icon-button (click)="center()"
+        matTooltip="Center diagram (Ctrl+C)">
   <mat-icon>center_focus_strong</mat-icon>
 </button>
