@@ -40,7 +40,7 @@ export class ManagerPanelComponent implements OnInit {
         this.loadingEvent.emit(true);
         this.diagramService.create(dialogInput).then((newDiagram) => {
           // console.log('ManagerPanelComponent.createNewDiagram created', newDiagram);
-          this.router.navigate(['/editor', newDiagram.id]);
+          this.router.navigate(['/doEditorShowHide', newDiagram.id]);
           this.loadingEvent.emit(false);
         });
 

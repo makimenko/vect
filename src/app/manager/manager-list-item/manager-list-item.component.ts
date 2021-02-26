@@ -98,7 +98,7 @@ export class ManagerListItemComponent implements OnInit {
     event.stopPropagation();
     this.itemState = State.clicked;
     setTimeout(() => {
-      this.router.navigate(['/editor', id]);
+      this.router.navigate(['/doEditorShowHide', id]);
     }, 80);
 
   }

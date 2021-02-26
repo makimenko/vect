@@ -2,22 +2,22 @@
   flex: 1 0 auto;
 }
 
-button {
-
-}
-
 .btn {
   z-index: 3;
   position: absolute;
 }
 
-.top-left {
+.editor {
   top: 5px;
   left: 5px;
 }
 
-.bottom-left {
+.center {
   bottom: 5px;
   left: 5px;
 }
 
+.screenshot {
+  bottom: 30px;
+  left: 5px;
+}

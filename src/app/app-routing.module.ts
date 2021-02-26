@@ -8,7 +8,7 @@ import {PendingChangesGuard} from './general/service/pending-changes.guard';
 const routes: Routes = [
   // Mapping:
   {path: 'manager', component: ManagerHomeComponent, canActivate: [LoggedInGuard]},
-  {path: 'editor/:id', component: EditorLayoutComponent, canActivate: [LoggedInGuard], canDeactivate: [PendingChangesGuard]},
+  {path: 'doEditorShowHide/:id', component: EditorLayoutComponent, canActivate: [LoggedInGuard], canDeactivate: [PendingChangesGuard]},
   // Redirection:
   {path: '', redirectTo: '/manager', pathMatch: 'full'},
   {path: '*', redirectTo: '/manager'},

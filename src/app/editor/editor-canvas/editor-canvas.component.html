@@ -1,7 +1,7 @@
 <atft-map-controls #controls
                    rotateSpeed=0 zoomSpeed=1.2 [dampingFactor]="0.1" [enableDamping]="true"
                    [autoRotate]="false" [minZoom]="3" [maxZoom]="12">
-  <atft-renderer-canvas>
+  <atft-renderer-canvas [preserveDrawingBuffer]="true">
     <atft-orthographic-camera [positionX]=positionX [positionY]=-50 [positionZ]="100" [zoom]=6 [zAxisUp]="true">
     </atft-orthographic-camera>
 
@@ -27,12 +27,17 @@
   </atft-renderer-canvas>
 </atft-map-controls>
 
-<button #buttonEditor class="btn top-left" mat-icon-button (click)="editorToggle.emit()"
+<button #buttonEditor class="btn editor" mat-icon-button (click)="doEditorShowHide()"
         matTooltip="Show/Hide diagram editor (Ctrl+E)">
   <mat-icon>create</mat-icon>
 </button>
 
-<button #buttonReset class="btn bottom-left" mat-icon-button (click)="center()"
+<button #buttonReset class="btn center" mat-icon-button (click)="center()"
         matTooltip="Center diagram (Ctrl+C)">
   <mat-icon>center_focus_strong</mat-icon>
+</button>
+
+<button #buttonImage class="btn screenshot" mat-icon-button (click)="doImage()"
+        matTooltip="Image (Ctrl+I)">
+  <mat-icon>camera_alt</mat-icon>
 </button>

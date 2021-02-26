@@ -23,7 +23,7 @@
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
-    "atft": "^1.4.6",
+    "atft": "^1.4.7",
     "dagre": "^0.8.5",
     "rxjs": "~6.6.0",
     "three": "^0.124.0",
