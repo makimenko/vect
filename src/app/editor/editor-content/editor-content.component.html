@@ -1,9 +1,9 @@
 <mat-drawer-container [hasBackdrop]="false">
   <mat-drawer #drawer mode="push" position="start" [opened]="sidePanelOpened">
     <app-editor-side #editor
-      [id]="id"
-      (diagramSourceUpdated)="diagram.yaml= $event.diagramSource"
-      (loadingEvent)="loadingEvent.emit($event)"
+                     [id]="id"
+                     (diagramSourceUpdated)="diagram.yaml= $event.diagramSource"
+                     (loadingEvent)="loadingEvent.emit($event)" (dirtyEvent)="dirtyEvent.emit($event)"
     ></app-editor-side>
   </mat-drawer>
   <mat-drawer-content>

@@ -40,8 +40,19 @@ export class EditorSideComponent implements OnInit {
   diagramSourceUpdated = new EventEmitter<DiagramItem>();
 
   @Output() loadingEvent = new EventEmitter<boolean>();
+  @Output() dirtyEvent = new EventEmitter<boolean>();
 
   @ViewChild('submitButton') submitButton: MatButton;
+  @ViewChild('helpButton') helpButton: MatButton;
+
+  // tslint:disable-next-line:variable-name
+  private _dirty = false;
+  set dirty(value: boolean) {
+    if (value !== this._dirty) {
+      this._dirty = value;
+      this.dirtyEvent.emit(value);
+    }
+  }
 
   initialized = false;
   saveInProgress = false;
@@ -80,6 +91,9 @@ export class EditorSideComponent implements OnInit {
     // console.log('EditorSideComponent.refresh item', this.item);
 
     this.form = this.fb.group(this.item);
+    this.form.get('diagramSource').valueChanges.subscribe((val) => {
+      this.dirty = true;
+    });
 
     setTimeout(i => {
       this.initialized = true;
@@ -88,6 +102,7 @@ export class EditorSideComponent implements OnInit {
     }, 100);
 
   }
+
 
   public async onSubmit(): Promise<void> {
     // console.log('EditorSideComponent.onSubmit');
@@ -106,6 +121,7 @@ export class EditorSideComponent implements OnInit {
     this.saveInProgress = true;
     this.diagramService.save(diagram).then(() => {
       this.saveInProgress = false;
+      this.dirty = false;
       this.form.markAsPristine();
     });
     await this.diagramSourceUpdated.emit(diagram);
@@ -115,6 +131,11 @@ export class EditorSideComponent implements OnInit {
   @HostListener('window:keydown.control.enter', ['$event'])
   public shortCutSave(event: KeyboardEvent): void {
     btnClick(event, this.submitButton);
+  }
+
+  @HostListener('window:keydown.f1', ['$event'])
+  public shortCutHelp(event: KeyboardEvent): void {
+    btnClick(event, this.helpButton);
   }
 
   public processDiagramStatus(status: boolean): void {

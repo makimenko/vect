@@ -8,12 +8,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {ManagerModule} from './manager/manager.module';
 import {DiagramService} from './data-access/service/diagram.service';
 import {AuthService} from './general/service/auth.service';
-import {LoggedInGuardService} from './general/service/logged-in-guard.service';
 import {GeneralModule} from './general/general.module';
 import {UserPreferenceService} from './general/service/user-preference.service';
 import {GoogleDriveService} from './data-access/service/google-drive.service';
 import {HttpClientModule} from '@angular/common/http';
 import {TemplateService} from './data-access/service/template.service';
+import {LoggedInGuard} from './general/service/logged-in.guard';
+import {PendingChangesGuard} from './general/service/pending-changes.guard';
+
 
 @NgModule({
   imports: [
@@ -32,10 +34,11 @@ import {TemplateService} from './data-access/service/template.service';
   providers: [
     DiagramService,
     AuthService,
-    LoggedInGuardService,
+    LoggedInGuard,
     UserPreferenceService,
     GoogleDriveService,
-    TemplateService
+    TemplateService,
+    PendingChangesGuard
   ],
   bootstrap: [
     AppComponent

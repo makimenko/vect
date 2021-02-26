@@ -12,7 +12,8 @@
     <mat-progress-bar *ngIf="saveInProgress" mode="buffer"></mat-progress-bar>
   </button>
 
-  <button class="help" mat-icon-button aria-label="Edit" (click)="showHelp()" type="button" matTooltip="Help (Ctrl+H)">
+  <button #helpButton class="help" mat-icon-button aria-label="Edit"
+          (click)="showHelp()" type="button" matTooltip="Help (F1)">
     <mat-icon>help_outline</mat-icon>
   </button>
 
