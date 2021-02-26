@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import {EditorHelpDialogComponent} from '../editor/editor-help-dialog/editor-help-dialog.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {MatButtonModule} from '@angular/material/button';
     ConfirmDialogComponent
   ],
   bootstrap: [
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    EditorHelpDialogComponent
   ]
 })
 export class GeneralModule {

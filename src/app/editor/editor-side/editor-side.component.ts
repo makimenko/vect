@@ -1,9 +1,11 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DiagramService} from '../../data-access/service/diagram.service';
 import {DiagramItem} from '../../data-access/model/diagram-item.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatButton} from '@angular/material/button';
+import {MatDialog} from '@angular/material/dialog';
+import {EditorHelpDialogComponent} from '../editor-help-dialog/editor-help-dialog.component';
 
 @Component({
   selector: 'app-editor-side',
@@ -50,7 +52,8 @@ export class EditorSideComponent implements OnInit {
 
   constructor(
     protected fb: FormBuilder,
-    protected diagramService: DiagramService
+    protected diagramService: DiagramService,
+    protected dialog: MatDialog,
   ) {
   }
 
@@ -121,4 +124,10 @@ export class EditorSideComponent implements OnInit {
     this.diagramStatus = status;
   }
 
+  public showHelp(): void {
+    const dialogRef = this.dialog.open(EditorHelpDialogComponent, {
+      // width: '350px',
+      // data: {}
+    });
+  }
 }

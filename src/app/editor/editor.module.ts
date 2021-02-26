@@ -16,29 +16,33 @@ import {EditorToolbarComponent} from './editor-toolbar/editor-toolbar.component'
 import {AnimationService, AtftModule, RendererService, StatsService, AtftDataCenterActorModule} from 'atft';
 import {RouterModule} from '@angular/router';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { EditorHelpDialogComponent } from './editor-help-dialog/editor-help-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AtftModule,
-    AtftDataCenterActorModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FlexLayoutModule,
-    ReactiveFormsModule,
-    RouterModule,
-    MatProgressBarModule
-  ],
+    imports: [
+        CommonModule,
+        AtftModule,
+        AtftDataCenterActorModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FlexLayoutModule,
+        ReactiveFormsModule,
+        RouterModule,
+        MatProgressBarModule,
+        MatDialogModule
+    ],
   declarations: [
     EditorLayoutComponent,
     EditorContentComponent,
     EditorToolbarComponent,
     EditorSideComponent,
-    EditorCanvasComponent
+    EditorCanvasComponent,
+    EditorHelpDialogComponent
   ],
   exports: [
     EditorLayoutComponent,

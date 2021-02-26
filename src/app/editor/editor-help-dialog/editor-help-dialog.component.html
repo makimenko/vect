@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>About Diagram Syntax</h1>
+<div mat-dialog-content>
+  <p>Diagram syntax is in <a href="https://en.wikipedia.org/wiki/YAML" target="_blank">YAML</a></p>
+  <p>Data structure:</p>
+  <ul>
+    <li><b>nodes</b> is array of Node:
+      <ul>
+        <li><b>name</b>: graph node identifier (could be referenced in edges from/to)</li>
+        <li><b>label</b>: business name of the node</li>
+        <li><b>type</b>: (default: stand) possible values: stand | compact | barrel. Will be enhanced.</li>
+        <li><b>icon</b>: <a href="https://material.io/resources/icons" target="_blank">Material Icon</a></li>
+        <li><b>composition</b>: if node belongs to composition (parent), then provide name of composition</li>
+      </ul>
+    </li>
+
+    <li><b>compositions</b> is array of Composition:
+      <ul>
+        <li><b>name</b>: composition identifier (could be referenced from Node and Composition)</li>
+        <li><b>label</b>: business name of the composition (eg Data Access Layer)</li>
+        <li><b>border</b>: (default: plane) possible values: plane | frame. Will be enhanced.</li>
+        <li><b>composition</b>: if composition is embedded into parent composition, then provide name of parent
+          composition
+        </li>
+      </ul>
+    </li>
+
+    <li><b>edges</b> is array of Edge:
+      <ul>
+        <li><b>from</b>: name of Node (start of the connection)</li>
+        <li><b>to</b>: name of Node (end of the connection)</li>
+        <li><b>name</b>: identifier of edge. Very optional.</li>
+        <li><b>label</b>: business label, which describes meaning of connection</li>
+      </ul>
+    </li>
+
+  </ul>
+
+  <p>If you want to see example diagram, please select template in new diagram dialog.</p>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>OK</button>
+</div>

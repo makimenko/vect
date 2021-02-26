@@ -9,4 +9,10 @@
     <mat-hint>Ctrl+Enter</mat-hint>
     <mat-progress-bar *ngIf="saveInProgress" mode="buffer"></mat-progress-bar>
   </button>
+
+  <button class="help" mat-icon-button aria-label="Edit" (click)="showHelp()" type="button">
+    <mat-icon>help_outline</mat-icon>
+  </button>
+
 </form>
+
