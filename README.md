@@ -2,7 +2,7 @@
 
 # About Vect
 - Infrastructure Architecture brainstorming tool
-- Based on [atft](https://github.com/makimenko/angular-template-for-threejs), [Angular](https://angular.io) and  [Google Drive API v3](https://developers.google.com/drive/api/v3/reference)
+- Based on [atft](https://github.com/makimenko/angular-template-for-threejs), [three.js](https://github.com/mrdoob/three.js), [Angular](https://angular.io), [Google Drive API v3](https://developers.google.com/drive/api/v3/reference), [dagre](https://github.com/dagrejs/dagre)
 
 # Demo
 See [Demo](https://makimenko.github.io/vect) published on GitHub page.
