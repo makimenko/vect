@@ -11,7 +11,12 @@
             <li><b>name</b>: graph node identifier (could be referenced in edges from/to)</li>
             <li><b>label</b>: business name of the node</li>
             <li><b>type</b>: (default: stand) possible values: stand | compact | barrel. Will be enhanced.</li>
-            <li><b>icon</b>: <a href="https://material.io/resources/icons" target="_blank">Material Icon</a></li>
+            <li><b>icon</b>: Icon namespace and name. Separated by semicolon. The following icon namespaces are supported by default:</li>
+            <ul>
+              <li><b>md</b>: (Default) <a href="https://material.io/resources/icons" target="_blank">Material Icon</a>. For example: "alarm_on" or "md:alarm_on"</li>
+              <li><b>az</b>: <a href="https://github.com/makimenko/files/tree/master/azure-icons" target="_blank">Azure Icons</a>. For example: "az:App-Services"</li>
+              <li><b>a</b>: Project assets folder "assets/svg". For example: "a:sitemap-solid"</li>
+            </ul>
             <li><b>composition</b>: if node belongs to composition (parent), then provide name of composition</li>
           </ul>
         </li>
@@ -45,7 +50,7 @@
       <ul>
         <li><b>Ctrl+Enter</b>: Save diagram source and draw diagram</li>
         <li><b>Ctrl+E</b>: Show/hide diagram editor</li>
-        <li><b>Ctrl+C</b>: Center diagram</li>
+        <li><b>Ctrl+R</b>: Reset camera position and zoom level</li>
         <li><b>F1</b>: Help</li>
       </ul>
     </mat-tab>

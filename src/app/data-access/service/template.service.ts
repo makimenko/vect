@@ -37,7 +37,66 @@ edges:
     to: db1
   - from: api
     to: db2`
-}];
+}, {
+  id: 'template-2',
+  name: 'Azure Sample',
+  description: 'Demonstrates sample of Azure resources',
+  diagramSource: `compositions:
+  - name: cnt
+    label: Docker Containers
+  - name: data
+    label: Data Layer
+
+nodes:
+  - name: web
+    type: icon
+    icon: language
+    label: Web User
+  - name: spa
+    type: icon
+    icon: az:App-Services
+    composition: cnt
+  - name: aks
+    type: icon
+    icon: az:Kubernetes-Services
+    composition: cnt
+  - name: db
+    type: icon
+    icon: az:SQL-Server
+    label: SQL Server
+    composition: data
+  - name: db2
+    type: icon
+    icon: az:Azure-Cosmos-DB
+    label: CosmosDB
+    composition: data
+  - name: kv
+    icon: az:Key-Vaults
+    type: icon
+    label: KeyVault
+  - name: aad
+    label: Azure Active Directory
+    icon: az:Azure-Active-Directory
+    type: icon
+
+edges:
+  - from: web
+    to: spa
+  - from: spa
+    to: aks
+  - from: spa
+    to: kv
+  - from: aks
+    to: kv
+  - from: spa
+    to: aad
+  - from: aks
+    to: db
+  - from: aks
+    to: db2`
+}
+
+];
 
 @Injectable({
   providedIn: 'root'

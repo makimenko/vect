@@ -41,7 +41,7 @@ export class EditorCanvasComponent implements OnInit {
     // console.log('mouseExit');
   }
 
-  public center(): void {
+  public resetCamera(): void {
     this.controls.reset();
   }
 
@@ -50,7 +50,7 @@ export class EditorCanvasComponent implements OnInit {
     btnClick(event, this.buttonEditor);
   }
 
-  @HostListener('window:keydown.control.c', ['$event'])
+  @HostListener('window:keydown.control.r', ['$event'])
   public shortCutReset(event: KeyboardEvent): void {
     btnClick(event, this.buttonReset);
   }
