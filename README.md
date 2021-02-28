@@ -40,7 +40,7 @@ Focus on content. [Dagre](https://github.com/dagrejs/dagre) will do an automatic
 Nodes, Edges and Compositions are supported:
 
 <a href="https://makimenko.github.io/vect">
-<img src="https://raw.githubusercontent.com/makimenko/files/master/vect/images/editor2.jpg">
+  <img src="https://raw.githubusercontent.com/makimenko/files/master/vect/images/auto-layout.gif">
 </a>
 
 
