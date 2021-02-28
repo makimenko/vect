@@ -3,6 +3,7 @@ import {DiagramItem, DiagramMetadata} from '../model/diagram-item.model';
 import {eqCondition, GoogleDriveService, inCondition, MIME_DIAGRAM_FILE, MIME_FOLDER, QUERY_NOT_DELETED} from './google-drive.service';
 import {NewDiagramDialogData} from '../../manager/new-diagram-dialog/new-diagram-dialog.component';
 import {TemplateService} from './template.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 const VECT_FOLDER_NAME = 'Vect';
 
@@ -24,7 +25,8 @@ export class DiagramService {
 
   constructor(
     protected drive: GoogleDriveService,
-    protected templateService: TemplateService
+    protected templateService: TemplateService,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -33,6 +35,9 @@ export class DiagramService {
       // console.log('DiagramService.init');
       const result = await this.drive.createIfAbsent(VECT_FOLDER_NAME, MIME_FOLDER);
       if (result.created) {
+        this.snackBar.open('Creating sample diagrams. Please wait...', 'Ok', {
+          duration: 5000
+        });
         // Generate sample diagrams (if user is newly joined):
         for (const template of this.templateService.getTemplateList()) {
           await this.create({

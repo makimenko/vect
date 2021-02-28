@@ -200,11 +200,4 @@ export class GoogleDriveService {
     });
   }
 
-
-  public async test(): Promise<void> {
-    // console.log('GoogleDriveService.test');
-    // await this.readFileMeta('1u-pb9bho85UTTcz9wzOgi1v6v2dasvXQ');
-  }
-
-
 }

@@ -23,7 +23,7 @@
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
-    "atft": "^1.4.8",
+    "atft": "^1.4.9",
     "dagre": "^0.8.5",
     "rxjs": "~6.6.0",
     "three": "^0.124.0",
@@ -55,5 +55,20 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.1.2"
-  }
+  },
+  "keywords": [
+    "angular",
+    "atft",
+    "google",
+    "azure",
+    "aws",
+    "architecture",
+    "blueprint",
+    "documentation",
+    "three",
+    "futuristic",
+    "yaml",
+    "dagre",
+    "gapi"
+  ]
 }

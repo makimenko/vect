@@ -4,7 +4,7 @@ import {DiagramFile, DiagramItem} from '../model/diagram-item.model';
 
 const templates: Array<DiagramItem> = [{
   id: 'template-1',
-  name: 'Sample Diagram',
+  name: 'Basic Sample',
   description: 'Demonstrates basic functionality of vect application',
   diagramSource: `compositions:
   - name: backend
@@ -94,8 +94,94 @@ edges:
     to: db
   - from: aks
     to: db2`
-}
+}, {
+  id: 'template-3',
+  name: 'AWS Sample',
+  description: 'Demonstrates sample of AWS resources',
+  diagramSource: `compositions:
+  - name: data
+    label: Data Layer
 
+nodes:
+  - name: api
+    icon: aws:API-Gateway
+    type: compact
+  - name: eck
+    icon: aws:Elastic-Kubernetes-Service
+    label: Kuberentes
+    type: compact
+  - name: s
+    icon: aws:Secrets-Manager
+    label: Secrets
+    type: icon
+  - name: db
+    icon: aws:DynamoDB
+    type: barrel
+    composition: data
+  - name: fs
+    icon: aws:Elastic-File-System
+    type: icon
+    composition: data
+
+edges:
+  - from: api
+    to: eck
+  - from: eck
+    to: s
+  - from: eck
+    to: db
+  - from: eck
+    to: fs`
+}, {
+  id: 'template-4',
+  name: 'Google Cloud Sample',
+  description: 'Demonstrates sample of Google Cloud resources',
+  diagramSource: `compositions:
+  - name: compute
+    label: Computing
+    composition: cloud
+  - name: cloud
+    label: Google Cloud
+    border: frame
+
+nodes:
+  - name: mob
+    label: Mobile Devices
+    type: icon
+    icon: md:important_devices
+  - name: api
+    icon: g:App-Engine
+    type: icon
+    label: App Engine
+    composition: cloud
+  - name: fn
+    icon: g:cloud-functions
+    type: compact
+    label: Cloud Functions
+    composition: compute
+  - name: cmp
+    icon: g:compute-engine
+    type: compact
+    label: Compute Engine
+    composition: compute
+  - name: st
+    icon: g:cloud-storage
+    type: barrel
+    label: Cloud Storage
+    composition: cloud
+
+edges:
+  - from: mob
+    to: api
+  - from: api
+    to: fn
+  - from: api
+    to: cmp
+  - from: cmp
+    to: st
+  - from: fn
+    to: st`
+}
 ];
 
 @Injectable({
