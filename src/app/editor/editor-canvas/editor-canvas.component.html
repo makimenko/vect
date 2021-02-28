@@ -20,7 +20,7 @@
                         translateX="-100" translateY="-100" s translateZ="200" [castShadow]="true">
       </atft-point-light>
 
-      <atft-dagre-layout>
+      <atft-dagre-layout [align]="layout.align" [rankdir]="layout.rankdir" [ranker]="layout.ranker">
         <atft-dagre-yaml-parser (status)="diagramStatus.emit($event)" [yaml]="yaml"></atft-dagre-yaml-parser>
       </atft-dagre-layout>
     </atft-scene>
@@ -42,3 +42,20 @@
         matTooltip="Image (Ctrl+I)">
   <mat-icon>camera_alt</mat-icon>
 </button>
+
+<button class="btn align" mat-icon-button (click)="layout.changeAlign()"
+        matTooltip="{{layout.align}}: Alignment for rank nodes. Can be UL, UR, DL, or DR, where U = up, D = down, L = left, and R = right.">
+  <mat-icon>format_align_center</mat-icon>
+</button>
+
+<button class="btn rankdir" mat-icon-button (click)="layout.changeRankdir()"
+        matTooltip="{{layout.rankdir}}: Direction for rank nodes. Can be TB, BT, LR, or RL, where T = top, B = bottom, L = left, and R = right.">
+  <mat-icon>rotate_90_degrees_ccw</mat-icon>
+</button>
+
+<button class="btn ranker" mat-icon-button (click)="layout.changeRanker()"
+        matTooltip="{{layout.ranker}}: Type of algorithm to assigns a rank to each node in the input graph. Possible values: network-simplex, tight-tree or longest-path">
+  <mat-icon>alt_route</mat-icon>
+</button>
+
+

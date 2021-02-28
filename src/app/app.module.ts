@@ -15,6 +15,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {TemplateService} from './data-access/service/template.service';
 import {LoggedInGuard} from './general/service/logged-in.guard';
 import {PendingChangesGuard} from './general/service/pending-changes.guard';
+import {DiagramLayoutService} from './data-access/service/diagram-layout.service';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {PendingChangesGuard} from './general/service/pending-changes.guard';
     UserPreferenceService,
     GoogleDriveService,
     TemplateService,
-    PendingChangesGuard
+    PendingChangesGuard,
+    DiagramLayoutService
   ],
   bootstrap: [
     AppComponent

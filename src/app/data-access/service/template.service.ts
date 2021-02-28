@@ -43,7 +43,7 @@ edges:
   description: 'Demonstrates sample of Azure resources',
   diagramSource: `compositions:
   - name: cnt
-    label: Docker Containers
+    label: Containers
   - name: data
     label: Data Layer
 

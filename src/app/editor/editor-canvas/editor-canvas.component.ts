@@ -2,6 +2,7 @@ import {Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild}
 import {AnimationService, MapControlsComponent, RendererCanvasComponent} from 'atft';
 import {MatButton} from '@angular/material/button';
 import {btnClick} from '../../general/utils/btnClick';
+import {DiagramLayoutService} from '../../data-access/service/diagram-layout.service';
 
 @Component({
   selector: 'app-editor-canvas',
@@ -22,7 +23,10 @@ export class EditorCanvasComponent implements OnInit {
 
   positionX = 15;
 
-  constructor(private animation: AnimationService) {
+  constructor(
+    private animation: AnimationService,
+    public layout: DiagramLayoutService
+  ) {
     this.animation.start();
   }
 
