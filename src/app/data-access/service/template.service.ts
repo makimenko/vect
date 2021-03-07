@@ -15,6 +15,8 @@ const templates: Array<DiagramItem> = [{
     composition: backend
 
 nodes:
+  - name: user
+    type: user
   - name: spa
     type: compact
     icon: connected_tv
@@ -31,6 +33,8 @@ nodes:
     composition: data
 
 edges:
+  - from: user
+    to: spa
   - from: spa
     to: api
   - from: api
@@ -49,8 +53,7 @@ edges:
 
 nodes:
   - name: web
-    type: icon
-    icon: language
+    type: workstation
     label: Web User
   - name: spa
     type: icon
