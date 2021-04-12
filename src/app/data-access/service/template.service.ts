@@ -16,7 +16,7 @@ const templates: Array<DiagramItem> = [{
 
 nodes:
   - name: user
-    type: user
+    model: user
   - name: spa
     type: compact
     icon: connected_tv
