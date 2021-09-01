@@ -1,18 +1,18 @@
 <atft-map-controls #controls
-                   rotateSpeed=0 zoomSpeed=1.2 [dampingFactor]="0.1" [enableDamping]="true"
-                   [autoRotate]="false" [minZoom]="3" [maxZoom]="12">
+                   rotateSpeed=0 zoomSpeed=1.2 [dampingFactor]="0.1" [enableDamping]="false"
+                   [autoRotate]="false" [minZoom]="3" [maxZoom]="100">
   <atft-renderer-canvas [preserveDrawingBuffer]="true">
     <atft-orthographic-camera [positionX]=positionX [positionY]=-50 [positionZ]="100" [zoom]=6 [zAxisUp]="true"
                               >
     </atft-orthographic-camera>
 
-    <atft-scene name="scene" background="0xa0a0a0">
-      <atft-plane-mesh name="ground" height="2000" width="2000" materialColor="0x999999" [depthWrite]="true"
+    <atft-scene name="scene" background="#a0a0a0">
+      <atft-plane-mesh name="ground" height="2000" width="2000" materialColor="#999999" [depthWrite]="true"
                        [castShadow]="false"
                        material="phong" [receiveShadow]="false" heightSegments=1 widthSegments="1" translateZ="-0.1">
       </atft-plane-mesh>
 
-      <atft-hemisphere-light name="hemi-light" skyColor="0xffffff" groundColor="0xffffff" intensity="0.4"
+      <atft-hemisphere-light name="hemi-light" skyColor="#ffffff" groundColor="#ffffff" intensity="0.4"
                              translateX="-20" translateY="-20" translateZ="100">
       </atft-hemisphere-light>
 
