@@ -9,10 +9,13 @@ export class LoggedInGuard implements CanActivate {
   constructor(
     private authService: AuthService
   ) {
+    console.log("LoggedInGuard.constructor")
   }
 
   public async canActivate(): Promise<boolean> {
-    return this.authService.checkIfUserAuthenticated();
+    const canActivate = this.authService.checkIfUserAuthenticated()
+    console.log("LoggedInGuard.canActivate", canActivate);
+    return canActivate;
   }
 
 }

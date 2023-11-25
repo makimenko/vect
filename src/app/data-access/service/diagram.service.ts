@@ -21,7 +21,7 @@ export function fileToDiagramItem(file: any): DiagramItem {
 export class DiagramService {
 
   private initialized = false;
-  private vectFolderId: string;
+  private vectFolderId!: string;
 
   constructor(
     protected drive: GoogleDriveService,
@@ -64,7 +64,8 @@ export class DiagramService {
     ]);
     // console.log('DiagramService.list response', list);
 
-    return await list.result.files.map(file => {
+    // @ts-ignore
+    return await list.result.files.map(file=> {
       // console.log('DiagramService.list map', file);
       const item = fileToDiagramItem(file);
       return item;

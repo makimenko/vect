@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+@import '../../custom-theme.scss';
+
+.card {
+  max-width: 400px;
+  background: mat.get-color-from-palette($vect-primary, A400, 0.5);
+}
+
+.grid {
+  background: mat.get-color-from-palette($vect-primary, A200, 0.5);
+}

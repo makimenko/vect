@@ -1,3 +1,3 @@
 <app-editor-toolbar #toolbar></app-editor-toolbar>
-<app-editor-content (loadingEvent)="toolbar.loading = $event" [id]="id" (dirtyEvent)="dirty=$event">
+<app-editor-content *ngIf="id" (loadingEvent)="toolbar.loading = $event" [id]="id" (dirtyEvent)="dirty=$event">
 </app-editor-content>

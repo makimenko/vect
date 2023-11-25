@@ -1,16 +1,16 @@
-@import '../../../theme.scss';
-
+@use '@angular/material' as mat;
+@import '../../../custom-theme.scss';
 
 mat-card {
   text-align: center;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
   height: 250px;
   padding: 20px;
   cursor: pointer;
 }
 
 mat-card:hover {
-  @include mat-elevation(20);
+  @include mat.elevation(20);
 
   mat-card-header {
     button {
@@ -22,7 +22,7 @@ mat-card:hover {
 
 
 mat-card:active {
-  @include mat-elevation(1);
+  @include mat.elevation(1);
 }
 
 
@@ -45,6 +45,11 @@ mat-card-header {
 mat-card-content {
   padding-top: 10px;
   width: 100%;
+  background: mat.get-color-from-palette($vect-primary, A200, 0.0);;
+}
+
+.mat-mdc-card-header {
+  padding: 0;
 }
 
 .delete {
@@ -56,5 +61,5 @@ mat-card-content {
 }
 
 .delete:hover {
-  @include mat-elevation(5);
+  @include mat.elevation(5);
 }

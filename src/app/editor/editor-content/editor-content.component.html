@@ -2,7 +2,7 @@
   <mat-drawer #drawer mode="push" position="start" [opened]="sidePanelOpened">
     <app-editor-side #editor
                      [id]="id"
-                     (diagramSourceUpdated)="diagram.yaml=$event.diagramSource"
+                     (diagramSourceUpdated)="diagram.updateDiagram($event)"
                      (loadingEvent)="loadingEvent.emit($event)"
                      (dirtyEvent)="dirtyEvent.emit($event)"
     ></app-editor-side>

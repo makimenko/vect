@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   gapi: {
     client_id: '184061935960-2fr916k9fulm6soq6rromfe13sbldf1b.apps.googleusercontent.com',
-    fetch_basic_profile: true,
+    api_key: 'AIzaSyDQXnl3IF6coInkarrGtOMW859DzNuIDcU',
     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
     scope: 'profile email https://www.googleapis.com/auth/drive.file',
     ux_mode: 'redirect',

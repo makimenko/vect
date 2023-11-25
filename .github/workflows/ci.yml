@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
 
@@ -14,12 +14,12 @@ jobs:
     - name: Install
       run: npm i
     - name: Build
-      run: npx ng build --prod --base-href "https://makimenko.github.io/vect/" --output-path ./dist/gh-pages-deploy
+      run: npx ng build --configuration "production" --base-href "https://makimenko.github.io/vect/" --output-path ./dist/gh-pages-deploy
     - name: Upload
       uses: actions/upload-artifact@v1
       with:
         name: spa
-        path: ./dist/gh-pages-deploy 
+        path: ./dist/gh-pages-deploy
   publish:
     runs-on: ubuntu-latest
     needs: [build]

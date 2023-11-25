@@ -17,8 +17,8 @@ export interface NewDiagramDialogData {
 })
 export class NewDiagramDialogComponent implements OnInit {
 
-  public form: FormGroup;
-  public templates: Array<DiagramFile>;
+  public form!: FormGroup;
+  public templates!: Array<DiagramFile>;
 
   constructor(
     public dialogRef: MatDialogRef<NewDiagramDialogComponent>,
@@ -48,15 +48,22 @@ export class NewDiagramDialogComponent implements OnInit {
   }
 
   get name(): AbstractControl {
-    return this.form.get('name');
+     return this.getFormControl('name');
   }
 
   get description(): AbstractControl {
-    return this.form.get('description');
+    return this.getFormControl('description');
   }
 
   get template(): AbstractControl {
-    return this.form.get('template');
+    return this.getFormControl('template')
+  }
+
+  protected getFormControl(name:string): AbstractControl {
+    const control = this.form.get(name);
+    if (!control)
+      throw new Error("Unable to find control by name: "+name);
+    return control;
   }
 
 }

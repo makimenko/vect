@@ -65,13 +65,14 @@ export class GoogleDriveService {
     });
   }
 
-  public async uploadFile(id: string, name: string, mimeType: string,
+  public async uploadFile(id?: string, name?: string, mimeType?: string,
                           parent?: string, fileContent?: string,
                           properties?: DiagramMetadata
   ): Promise<string> {
     // console.log('GoogleDriveService.uploadFile');
     await this.init();
 
+    // @ts-ignore
     const file = new Blob([fileContent], {type: mimeType});
     const metadata = {
       name,
@@ -91,7 +92,7 @@ export class GoogleDriveService {
     return response.id;
   }
 
-  private async saveOfUpdate(id: string, form: FormData): Promise<any> {
+  private async saveOfUpdate(id?: string, form?: FormData): Promise<any> {
     if (id) {
       // Update existing file:
       // console.log('GoogleDriveService.uploadFile (update existing)');
@@ -119,13 +120,14 @@ export class GoogleDriveService {
     // console.log('GoogleDriveService.create', name);
     await this.init();
 
-    let id: string;
+    let id: string = '';
     await gapi.client.drive.files.create({
       resource: {
         name,
         mimeType,
         parents: (parent ? [parent] : undefined)
       }
+      // @ts-ignore
     }).then((response) => {
       id = response.result.id;
     });

@@ -205,8 +205,11 @@ export class TemplateService {
     });
   }
 
-  public getTemplate(templateId: string): DiagramItem {
-    return templates.find(i => i.id === templateId);
+  public getTemplate(templateId: string): DiagramItem  {
+    const diag = templates.find(i => i.id === templateId)
+    if (!diag)
+      throw new Error('Diagram not found');
+    return diag;
   }
 
 }

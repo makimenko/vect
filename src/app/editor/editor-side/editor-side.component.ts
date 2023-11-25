@@ -1,13 +1,24 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DiagramService} from '../../data-access/service/diagram.service';
 import {DiagramItem} from '../../data-access/model/diagram-item.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatButton} from '@angular/material/button';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {EditorHelpDialogComponent} from '../editor-help-dialog/editor-help-dialog.component';
 import {btnClick} from '../../general/utils/btnClick';
-import {MatDialogRef} from '@angular/material/dialog/dialog-ref';
+import {ChangeDetection} from "@angular/cli/lib/config/workspace-schema";
+
 
 @Component({
   selector: 'app-editor-side',
@@ -32,10 +43,10 @@ import {MatDialogRef} from '@angular/material/dialog/dialog-ref';
     ])
   ]
 })
-export class EditorSideComponent implements OnInit {
+export class EditorSideComponent implements OnInit, AfterViewInit{
 
-  @Input() id: string;
-  private item: DiagramItem;
+  @Input() id!: string;
+  private item!: DiagramItem;
 
   @Output()
   diagramSourceUpdated = new EventEmitter<DiagramItem>();
@@ -43,10 +54,10 @@ export class EditorSideComponent implements OnInit {
   @Output() loadingEvent = new EventEmitter<boolean>();
   @Output() dirtyEvent = new EventEmitter<boolean>();
 
-  @ViewChild('submitButton') submitButton: MatButton;
-  @ViewChild('helpButton') helpButton: MatButton;
+  @ViewChild('submitButton') submitButton!: MatButton;
+  @ViewChild('helpButton') helpButton!: MatButton;
 
-  private helpDialogRef: MatDialogRef<EditorHelpDialogComponent>;
+  private helpDialogRef?: MatDialogRef<EditorHelpDialogComponent>;
 
   // tslint:disable-next-line:variable-name
   private _dirty = false;
@@ -61,14 +72,17 @@ export class EditorSideComponent implements OnInit {
   saveInProgress = false;
   diagramStatus = true;
 
-  form = new FormGroup({
-    source: new FormControl('')
-  });
+
+  form!: FormGroup;
+  // form = new FormGroup({
+  //   source: new FormControl('')
+  // });
 
   constructor(
     protected fb: FormBuilder,
     protected diagramService: DiagramService,
     protected dialog: MatDialog,
+    private ref: ChangeDetectorRef
   ) {
   }
 
@@ -80,28 +94,34 @@ export class EditorSideComponent implements OnInit {
       diagramSource: '',
       image: ''
     };
-
     this.form = this.fb.group(emptyItem);
+
     setTimeout(() => {
       this.refresh();
     }, 100);
+  }
+
+  ngAfterViewInit() {
 
   }
 
   protected async refresh(): Promise<void> {
     this.loadingEvent.emit(true);
     this.item = await this.diagramService.get(this.id);
-    // console.log('EditorSideComponent.refresh item', this.item);
+    console.log('EditorSideComponent.refresh item', this.item);
 
     this.form = this.fb.group(this.item);
-    this.form.get('diagramSource').valueChanges.subscribe((val) => {
+    this.form.get('diagramSource')?.valueChanges.subscribe((val) => {
       this.dirty = true;
     });
 
-    setTimeout(i => {
+    console.log('EditorSideComponent.refresh before setTimeout');
+    setTimeout((i: any) => {
+      console.log('EditorSideComponent.refresh insideTimeout');
       this.initialized = true;
       this.diagramSourceUpdated.emit(this.item);
       this.loadingEvent.emit(false);
+      console.log('EditorSideComponent.refresh endOfTimeout');
     }, 100);
 
   }
@@ -116,7 +136,7 @@ export class EditorSideComponent implements OnInit {
       name: this.item.name,
       description: this.item.description,
       image: this.item.image,
-      diagramSource: this.form.get('diagramSource').value
+      diagramSource: this.form.get('diagramSource')?.value
     };
     // console.log('EditorSideComponent.onSubmit value', diagram);
 
@@ -149,10 +169,12 @@ export class EditorSideComponent implements OnInit {
     // Allows to open Help dialog only once
     if (!this.helpDialogRef) {
       this.helpDialogRef = this.dialog.open(EditorHelpDialogComponent, {});
-      this.helpDialogRef.afterClosed().subscribe((result) => {
+      this.helpDialogRef.afterClosed().subscribe(() => {
         this.helpDialogRef = undefined;
       });
     }
   }
+
+
 
 }

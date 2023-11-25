@@ -10,7 +10,7 @@ import {ComponentCanDeactivate} from '../../general/service/pending-changes.guar
 })
 export class EditorLayoutComponent implements OnInit, ComponentCanDeactivate {
 
-  id: string;
+  id?: string | null;
   dirty = false;
 
   constructor(protected activatedRoute: ActivatedRoute) {

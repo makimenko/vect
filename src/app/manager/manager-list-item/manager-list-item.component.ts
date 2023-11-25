@@ -48,7 +48,7 @@ enum State {
 })
 export class ManagerListItemComponent implements OnInit {
 
-  @Input() item: DiagramItem;
+  @Input() item!: DiagramItem;
   @Output() loadingEvent = new EventEmitter<boolean>();
   @Output() reloadRequired = new EventEmitter<void>();
   itemState = State.active;

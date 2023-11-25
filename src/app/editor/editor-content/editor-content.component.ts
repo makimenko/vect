@@ -9,7 +9,7 @@ const KEY_SIDEBAR_OPENED = 'EditorContentComponent.sidePanelOpened';
   styleUrls: ['./editor-content.component.scss']
 })
 export class EditorContentComponent {
-  @Input() id: string;
+  @Input() id!: string;
   @Output() loadingEvent = new EventEmitter<boolean>();
   @Output() dirtyEvent = new EventEmitter<boolean>();
 
@@ -23,5 +23,4 @@ export class EditorContentComponent {
   public toggleSidePanel(): void {
     this.sidePanelOpened = this.pref.invertBoolean(KEY_SIDEBAR_OPENED, this.sidePanelOpened);
   }
-
 }
