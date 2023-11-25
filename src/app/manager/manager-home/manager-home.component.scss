@@ -1,6 +1,4 @@
-@import '../../../theme.scss';
-
-
+//@import '../../../custom-theme.scss';
 .container {
   width: 100%;
   height: 100%;
@@ -10,8 +8,10 @@
   width: 500px;
 }
 
+
+
 mat-drawer-content {
-  background-color: mat-color($primary, 0.5);
+  //TODO: background-color: mat-color($vect-primary, 0.5);
 }
 
 .progress {

@@ -20,6 +20,7 @@ import {EditorHelpDialogComponent} from './editor-help-dialog/editor-help-dialog
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatProgressBarModule,
     MatDialogModule,
     MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSelectModule
   ],
   declarations: [
     EditorLayoutComponent,

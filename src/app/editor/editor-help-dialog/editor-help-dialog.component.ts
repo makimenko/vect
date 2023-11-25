@@ -10,7 +10,7 @@ import {DiagramFile} from '../../data-access/model/diagram-item.model';
 })
 export class EditorHelpDialogComponent implements OnInit {
 
-  templates: Array<DiagramFile>;
+  templates!: Array<DiagramFile>;
 
   constructor(
     public dialogRef: MatDialogRef<EditorHelpDialogComponent>,

@@ -7,7 +7,8 @@ export class UserPreferenceService {
   constructor() {
   }
 
-  public getBoolean(key: string, defaultValue?: boolean): boolean {
+  public getBoolean(key: string, defaultValue: boolean): boolean {
+    // @ts-ignore
     const value: boolean = (/true/i).test(sessionStorage.getItem(key));
     return value ? value : defaultValue;
   }

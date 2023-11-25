@@ -1,0 +1,18 @@
+<mat-grid-list cols="1" rowHeight="100%" class="grid">
+  <mat-grid-tile>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Vect Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Diagrams are stored on your personal Google drive (in /vect folder).
+          Please login to Google account to continue.
+        </p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button color="accent" mat-raised-button #btnFocus=matButton [autofocus]="btnFocus.focus()" (click)="handleAuthClick()">Google Login</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

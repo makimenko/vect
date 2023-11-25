@@ -1,5 +1,5 @@
 <atft-map-controls #controls
-                   rotateSpeed=0 zoomSpeed=1.2 [dampingFactor]="0.1" [enableDamping]="false"
+                   [rotateSpeed]=0 [zoomSpeed]=1.2 [dampingFactor]="0.1" [enableDamping]="false"
                    [autoRotate]="false" [minZoom]="3" [maxZoom]="100">
   <atft-renderer-canvas [preserveDrawingBuffer]="true">
     <atft-orthographic-camera [positionX]=positionX [positionY]=-50 [positionZ]="100" [zoom]=6 [zAxisUp]="true"
@@ -7,21 +7,21 @@
     </atft-orthographic-camera>
 
     <atft-scene name="scene" background="#a0a0a0">
-      <atft-plane-mesh name="ground" height="2000" width="2000" materialColor="#999999" [depthWrite]="true"
+      <atft-plane-mesh name="ground" [height]="2000" [width]="2000" materialColor="#999999" [depthWrite]="true"
                        [castShadow]="false"
-                       material="phong" [receiveShadow]="false" heightSegments=1 widthSegments="1" translateZ="-0.1">
+                       material="phong" [receiveShadow]="false" [heightSegments]=1 [widthSegments]="1" [translateZ]="-0.1">
       </atft-plane-mesh>
 
-      <atft-hemisphere-light name="hemi-light" skyColor="#ffffff" groundColor="#ffffff" intensity="0.4"
-                             translateX="-20" translateY="-20" translateZ="100">
+      <atft-hemisphere-light name="hemi-light" skyColor="#ffffff" groundColor="#ffffff" [intensity]="0.4"
+                             [translateX]="-20" [translateY]="-20" [translateZ]="100">
       </atft-hemisphere-light>
 
-      <atft-point-light name="point-light" intensity="0.8"
-                        translateX="-100" translateY="-100" s translateZ="200" [castShadow]="true">
+      <atft-point-light name="point-light" [intensity]="0.8"
+                        [translateX]="-100" [translateY]="-100" [translateZ]="200" [castShadow]="true">
       </atft-point-light>
 
       <atft-dagre-layout [align]="layout.align" [rankdir]="layout.rankdir" [ranker]="layout.ranker">
-        <atft-dagre-yaml-parser (status)="diagramStatus.emit($event)" [yaml]="yaml"></atft-dagre-yaml-parser>
+        <atft-dagre-yaml-parser (status)="diagramStatus.emit($event)" *ngIf="yaml" [yaml]="yaml"></atft-dagre-yaml-parser>
       </atft-dagre-layout>
     </atft-scene>
 

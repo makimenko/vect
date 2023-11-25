@@ -1,8 +1,18 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {AnimationService, MapControlsComponent, RendererCanvasComponent} from 'atft';
 import {MatButton} from '@angular/material/button';
 import {btnClick} from '../../general/utils/btnClick';
 import {DiagramLayoutService} from '../../data-access/service/diagram-layout.service';
+import {DiagramItem} from "../../data-access/model/diagram-item.model";
 
 @Component({
   selector: 'app-editor-canvas',
@@ -11,21 +21,22 @@ import {DiagramLayoutService} from '../../data-access/service/diagram-layout.ser
 })
 export class EditorCanvasComponent implements OnInit {
 
-  @Input() yaml = ``;
+  @Input() yaml?: string;
   @Output() editorToggle = new EventEmitter<void>();
   @Output() diagramStatus = new EventEmitter<boolean>();
 
-  @ViewChild('controls') controls: MapControlsComponent;
-  @ViewChild('buttonEditor') buttonEditor: MatButton;
-  @ViewChild('buttonReset') buttonReset: MatButton;
-  @ViewChild('buttonImage') buttonImage: MatButton;
-  @ViewChild(RendererCanvasComponent) atftRenderCanvas: RendererCanvasComponent;
+  @ViewChild('controls') controls!: MapControlsComponent;
+  @ViewChild('buttonEditor') buttonEditor!: MatButton;
+  @ViewChild('buttonReset') buttonReset!: MatButton;
+  @ViewChild('buttonImage') buttonImage!: MatButton;
+  @ViewChild(RendererCanvasComponent) atftRenderCanvas!: RendererCanvasComponent;
 
   positionX = 15;
 
   constructor(
     private animation: AnimationService,
-    public layout: DiagramLayoutService
+    public layout: DiagramLayoutService,
+    private ref: ChangeDetectorRef
   ) {
     this.animation.start();
   }
@@ -79,6 +90,12 @@ export class EditorCanvasComponent implements OnInit {
 
   public doEditorShowHide(): void {
     this.editorToggle.emit();
+  }
+
+  updateDiagram($event: DiagramItem) {
+    console.log("EditorCanvasComponent.updateDiagram")
+    this.yaml=$event.diagramSource
+    this.ref.detectChanges();
   }
 
 }

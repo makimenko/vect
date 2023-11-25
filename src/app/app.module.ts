@@ -16,6 +16,10 @@ import {TemplateService} from './data-access/service/template.service';
 import {LoggedInGuard} from './general/service/logged-in.guard';
 import {PendingChangesGuard} from './general/service/pending-changes.guard';
 import {DiagramLayoutService} from './data-access/service/diagram-layout.service';
+import { LoginHomeComponent } from './login-home/login-home.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -27,10 +31,14 @@ import {DiagramLayoutService} from './data-access/service/diagram-layout.service
     EditorModule,
     ManagerModule,
     GeneralModule,
-    HttpClientModule
+    HttpClientModule,
+    MatGridListModule,
+    MatCardModule,
+    MatButtonModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginHomeComponent
   ],
   providers: [
     DiagramService,

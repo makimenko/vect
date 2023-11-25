@@ -8,13 +8,13 @@ const PREFIX = 'DiagramLayoutService.';
 })
 export class DiagramLayoutService {
 
-  align: string;
+  align!: string;
   alignValues = ['UL', 'UR', 'DL', 'DR'];
 
-  rankdir: string;
+  rankdir!: string;
   rankdirValues = ['TB', 'BT', 'LR', 'RL'];
 
-  ranker: string;
+  ranker!: string;
   rankerValues = ['network-simplex', 'tight-tree', 'longest-path'];
 
   /* TODO: later
@@ -35,7 +35,7 @@ export class DiagramLayoutService {
     this.ranker = this.getString('ranker', 'network-simplex');
   }
 
-  protected getString(key: string, defaultValue?: string): string {
+  protected getString(key: string, defaultValue: string): string {
     const val = localStorage.getItem(PREFIX + key);
     return val ? val : defaultValue;
   }
