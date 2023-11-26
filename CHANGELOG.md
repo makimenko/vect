@@ -7,15 +7,14 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* fix upgrade ([14ffef7](https://github.com/makimenko/vect/commit/14ffef79f81c6f77d72f9ead3d58e7754205187d))
-* upgrade atft:1.5.0, threejs:0.131.3 ([51f7085](https://github.com/makimenko/vect/commit/51f70855bcb4255a3ebea3af6929bd93ef1115f4))
-* upgrade to atft 1.5.2 ([6e7cbfa](https://github.com/makimenko/vect/commit/6e7cbfa773d0c56aad71d45c4085554359fcb3ec))
+* reanimate vect project (Angular 16, threejs 0.158.0, atft 1.5.2) ([c9d8d57](https://github.com/makimenko/vect/commit/c9d8d57e0001cb0d88f00fff1fc0ac93c2b510ac))
 
 
 ### Bug Fixes
-
+* fix upgrade ([14ffef7](https://github.com/makimenko/vect/commit/14ffef79f81c6f77d72f9ead3d58e7754205187d))
+* upgrade atft:1.5.0, threejs:0.131.3 ([51f7085](https://github.com/makimenko/vect/commit/51f70855bcb4255a3ebea3af6929bd93ef1115f4))
+* upgrade to atft 1.5.2 ([6e7cbfa](https://github.com/makimenko/vect/commit/6e7cbfa773d0c56aad71d45c4085554359fcb3ec))
 * environment configuration ([a072392](https://github.com/makimenko/vect/commit/a072392fe194a871b29c165e42c4fc56db2358d7))
-* reanimate vect project (Angular 16, threejs 0.158.0, atft 1.5.2) ([c9d8d57](https://github.com/makimenko/vect/commit/c9d8d57e0001cb0d88f00fff1fc0ac93c2b510ac))
 * resolve issue with SCSS flex layout ([e7beeec](https://github.com/makimenko/vect/commit/e7beeec8d2d365a66513ae1c69e163afcdb2e4ee))
 * SCSS flex layout issues ([93ce5c5](https://github.com/makimenko/vect/commit/93ce5c59b830cde4c49b824b70ddb61fbac76ec8))
 * side navigator textarea bug ([fd2843b](https://github.com/makimenko/vect/commit/fd2843b90e1c429c69d97dd48eae6a1c9d33f949))
