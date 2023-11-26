@@ -1,4 +1,4 @@
-![CI build status](https://github.com/makimenko/vect/workflows/ci/badge.svg?branch=main)
+![CI build status](https://github.com/makimenko/vect/workflows/ci/badge.svg)
 
 # About Vect
 - Infrastructure Architecture brainstorming tool
