@@ -13,7 +13,7 @@ export class EditorContentComponent {
   @Output() loadingEvent = new EventEmitter<boolean>();
   @Output() dirtyEvent = new EventEmitter<boolean>();
 
-  public sidePanelOpened = this.pref.getBoolean(KEY_SIDEBAR_OPENED, false);
+  public sidePanelOpened = this.pref.getBoolean(KEY_SIDEBAR_OPENED, true);
 
   constructor(
     private pref: UserPreferenceService

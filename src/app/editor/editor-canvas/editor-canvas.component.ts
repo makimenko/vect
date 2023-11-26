@@ -12,7 +12,7 @@ import {AnimationService, MapControlsComponent, RendererCanvasComponent} from 'a
 import {MatButton} from '@angular/material/button';
 import {btnClick} from '../../general/utils/btnClick';
 import {DiagramLayoutService} from '../../data-access/service/diagram-layout.service';
-import {DiagramItem} from "../../data-access/model/diagram-item.model";
+import {DiagramItem} from '../../data-access/model/diagram-item.model';
 
 @Component({
   selector: 'app-editor-canvas',
@@ -92,9 +92,9 @@ export class EditorCanvasComponent implements OnInit {
     this.editorToggle.emit();
   }
 
-  updateDiagram($event: DiagramItem) {
-    console.log("EditorCanvasComponent.updateDiagram")
-    this.yaml=$event.diagramSource
+  updateDiagram($event: DiagramItem): void {
+    console.log('EditorCanvasComponent.updateDiagram');
+    this.yaml = $event.diagramSource;
     this.ref.detectChanges();
   }
 

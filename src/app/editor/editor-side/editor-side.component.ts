@@ -17,7 +17,6 @@ import {MatButton} from '@angular/material/button';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {EditorHelpDialogComponent} from '../editor-help-dialog/editor-help-dialog.component';
 import {btnClick} from '../../general/utils/btnClick';
-import {ChangeDetection} from "@angular/cli/lib/config/workspace-schema";
 
 
 @Component({
@@ -43,7 +42,7 @@ import {ChangeDetection} from "@angular/cli/lib/config/workspace-schema";
     ])
   ]
 })
-export class EditorSideComponent implements OnInit, AfterViewInit{
+export class EditorSideComponent implements OnInit {
 
   @Input() id!: string;
   private item!: DiagramItem;
@@ -72,11 +71,7 @@ export class EditorSideComponent implements OnInit, AfterViewInit{
   saveInProgress = false;
   diagramStatus = true;
 
-
   form!: FormGroup;
-  // form = new FormGroup({
-  //   source: new FormControl('')
-  // });
 
   constructor(
     protected fb: FormBuilder,
@@ -101,17 +96,14 @@ export class EditorSideComponent implements OnInit, AfterViewInit{
     }, 100);
   }
 
-  ngAfterViewInit() {
-
-  }
-
-  protected async refresh(): Promise<void> {
+  public async refresh(): Promise<void> {
+    console.log('EditorSideComponent.refresh');
     this.loadingEvent.emit(true);
     this.item = await this.diagramService.get(this.id);
     console.log('EditorSideComponent.refresh item', this.item);
 
     this.form = this.fb.group(this.item);
-    this.form.get('diagramSource')?.valueChanges.subscribe((val) => {
+    this.form.get('diagramSource')?.valueChanges.subscribe((val: any) => {
       this.dirty = true;
     });
 
@@ -176,5 +168,16 @@ export class EditorSideComponent implements OnInit, AfterViewInit{
   }
 
 
+  refreshTextarea(): void {
+    console.log('EditorSideComponent.refreshTextarea');
+    // TODO: There is a glitch with sidenav + textarea (height calculated incorrectly). Touching value to trigger recalculation.
+    const field = this.form.get('diagramSource');
+    if (field) {
+      const oldValue = field.value;
+      field.setValue('');
+      this.ref.detectChanges();
+      field.setValue(oldValue);
+    }
+  }
 
 }

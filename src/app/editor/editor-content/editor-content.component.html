@@ -1,5 +1,5 @@
 <mat-drawer-container [hasBackdrop]="false">
-  <mat-drawer #drawer mode="push" position="start" [opened]="sidePanelOpened">
+  <mat-drawer #drawer mode="push" position="start" [opened]="sidePanelOpened" (opened)="editor.refreshTextarea()">
     <app-editor-side #editor
                      [id]="id"
                      (diagramSourceUpdated)="diagram.updateDiagram($event)"
