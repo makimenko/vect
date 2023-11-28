@@ -20,6 +20,8 @@ import { LoginHomeComponent } from './login-home/login-home.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
+import {DynamicScriptLoaderService} from './general/service/dynamic-script-loader.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import {MatButtonModule} from "@angular/material/button";
     HttpClientModule,
     MatGridListModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressBarModule
   ],
   declarations: [
     AppComponent,
@@ -43,6 +46,7 @@ import {MatButtonModule} from "@angular/material/button";
   providers: [
     DiagramService,
     AuthService,
+    DynamicScriptLoaderService,
     LoggedInGuard,
     UserPreferenceService,
     GoogleDriveService,

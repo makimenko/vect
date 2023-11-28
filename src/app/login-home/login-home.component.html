@@ -12,7 +12,7 @@
         </p>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-button color="warn" mat-raised-button #btnFocus=matButton [autofocus]="btnFocus.focus()" (click)="handleAuthClick()">Google Login</button>
+        <button [disabled]="!authService.allowToSignIn" mat-button color="warn" mat-raised-button #btnFocus=matButton [autofocus]="btnFocus.focus()" (click)="handleAuthClick()">Google Login</button>
       </mat-card-actions>
     </mat-card>
   </mat-grid-tile>

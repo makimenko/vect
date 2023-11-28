@@ -12,7 +12,7 @@ export class LoginHomeComponent implements OnInit {
   @Output() authenticated: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private authService: AuthService,
+    protected authService: AuthService,
     private router: Router
   ) {
     this.userAuthenticated = this.userAuthenticated.bind(this);
