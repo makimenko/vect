@@ -23,5 +23,7 @@ export class EditorContentComponent {
 
   public toggleSidePanel(): void {
     this.sidePanelOpened = this.pref.invertBoolean(KEY_SIDEBAR_OPENED, this.sidePanelOpened);
+    this.pref.setBoolean(KEY_SIDEBAR_OPENED, this.sidePanelOpened);
   }
+
 }

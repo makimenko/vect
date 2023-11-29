@@ -8,12 +8,19 @@ export class UserPreferenceService {
   }
 
   public getBoolean(key: string, defaultValue: boolean): boolean {
-    // @ts-ignore
-    const value: boolean = (/true/i).test(sessionStorage.getItem(key));
-    return value ? value : defaultValue;
+    const txt  = sessionStorage.getItem(key);
+    let res = false;
+    if (txt === undefined) {
+      res = false;
+    } else {
+      res = txt === "true";
+    }
+    console.log("UserPreferenceService.getBoolean", key, res);
+    return res;
   }
 
   public setBoolean(key: string, value: boolean): void {
+    console.log("UserPreferenceService.setBoolean", key, value);
     sessionStorage.setItem(key, String(value));
   }
 

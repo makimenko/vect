@@ -65,7 +65,9 @@ export class EditorSideComponent implements OnInit {
   // tslint:disable-next-line:variable-name
   private _dirty = false;
   set dirty(value: boolean) {
+    // console.log('EditorSideComponent.dirty', value);
     if (value !== this._dirty) {
+      // console.log('EditorSideComponent.dirty real setter', value);
       this._dirty = value;
       this.dirtyEvent.emit(value);
     }
@@ -83,6 +85,7 @@ export class EditorSideComponent implements OnInit {
     protected dialog: MatDialog,
     private ref: ChangeDetectorRef
   ) {
+    this.dirty = false;
   }
 
   public ngOnInit(): void {
@@ -171,16 +174,20 @@ export class EditorSideComponent implements OnInit {
     }
   }
 
-
   refreshTextarea(): void {
     console.log('EditorSideComponent.refreshTextarea');
     // TODO: There is a glitch with sidenav + textarea (height calculated incorrectly). Touching value to trigger recalculation.
     const field = this.form.get('diagramSource');
     if (field) {
+      const oldDirty = this.dirty ? true : false;
       const oldValue = field.value;
+
       field.setValue('');
       this.ref.detectChanges();
+
       field.setValue(oldValue);
+      this.ref.detectChanges();
+      this.dirty = oldDirty; // keep unmodified (if it was initially)
     }
   }
 
