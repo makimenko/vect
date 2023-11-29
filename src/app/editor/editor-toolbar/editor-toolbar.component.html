@@ -1,8 +1,8 @@
 <mat-toolbar>
-  <span>Vect</span>
+  <span>Vect Diagram - {{diagramLoading?.loadedDiagramName}}</span>
   <span class="example-spacer"></span>
   <button mat-icon-button routerLink="/list">
     <mat-icon>close</mat-icon>
   </button>
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar *ngIf="diagramLoading?.busy" mode="indeterminate"></mat-progress-bar>
 </mat-toolbar>

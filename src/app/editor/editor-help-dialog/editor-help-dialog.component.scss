@@ -1,5 +1,6 @@
-//@import '../../../custom-theme.scss';
+@use '@angular/material' as mat;
+@import '../../../custom-theme.scss';
 
 a {
-  //TODO: color: $vect-primary;
+  color: mat.get-color-from-palette($vect-primary, A200, 0.5);
 }

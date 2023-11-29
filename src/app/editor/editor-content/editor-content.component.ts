@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UserPreferenceService} from '../../general/service/user-preference.service';
+import {DiagramLoadingEvent} from '../editor-side/editor-side.component';
 
 const KEY_SIDEBAR_OPENED = 'EditorContentComponent.sidePanelOpened';
 
@@ -10,7 +11,7 @@ const KEY_SIDEBAR_OPENED = 'EditorContentComponent.sidePanelOpened';
 })
 export class EditorContentComponent {
   @Input() id!: string;
-  @Output() loadingEvent = new EventEmitter<boolean>();
+  @Output() diagramLoadingEvent = new EventEmitter<DiagramLoadingEvent>();
   @Output() dirtyEvent = new EventEmitter<boolean>();
 
   public sidePanelOpened = this.pref.getBoolean(KEY_SIDEBAR_OPENED, true);

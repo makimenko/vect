@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {DiagramLoadingEvent} from '../editor-side/editor-side.component';
 
 @Component({
   selector: 'app-editor-toolbar',
@@ -7,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class EditorToolbarComponent implements OnInit {
 
-  @Input() loading = false;
+  @Input() diagramLoading?: DiagramLoadingEvent;
 
   constructor() { }
 

@@ -1,9 +1,9 @@
 <mat-drawer-container [hasBackdrop]="false">
-  <mat-drawer #drawer mode="push" position="start" [opened]="sidePanelOpened" (opened)="editor.refreshTextarea()">
+  <mat-drawer #drawer mode="push" position="start" [opened]="sidePanelOpened" (opened)="editor.refreshTextarea()" disableClose>
     <app-editor-side #editor
                      [id]="id"
                      (diagramSourceUpdated)="diagram.updateDiagram($event)"
-                     (loadingEvent)="loadingEvent.emit($event)"
+                     (diagramLoadingEvent)="diagramLoadingEvent.emit($event)"
                      (dirtyEvent)="dirtyEvent.emit($event)"
     ></app-editor-side>
   </mat-drawer>

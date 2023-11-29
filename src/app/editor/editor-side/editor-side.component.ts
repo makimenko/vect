@@ -18,6 +18,10 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {EditorHelpDialogComponent} from '../editor-help-dialog/editor-help-dialog.component';
 import {btnClick} from '../../general/utils/btnClick';
 
+export type DiagramLoadingEvent = {
+  busy: boolean,
+  loadedDiagramName?: string
+};
 
 @Component({
   selector: 'app-editor-side',
@@ -50,7 +54,7 @@ export class EditorSideComponent implements OnInit {
   @Output()
   diagramSourceUpdated = new EventEmitter<DiagramItem>();
 
-  @Output() loadingEvent = new EventEmitter<boolean>();
+  @Output() diagramLoadingEvent = new EventEmitter<DiagramLoadingEvent>();
   @Output() dirtyEvent = new EventEmitter<boolean>();
 
   @ViewChild('submitButton') submitButton!: MatButton;
@@ -98,7 +102,7 @@ export class EditorSideComponent implements OnInit {
 
   public async refresh(): Promise<void> {
     console.log('EditorSideComponent.refresh');
-    this.loadingEvent.emit(true);
+    this.diagramLoadingEvent.emit({busy: true});
     this.item = await this.diagramService.get(this.id);
     console.log('EditorSideComponent.refresh item', this.item);
 
@@ -112,7 +116,7 @@ export class EditorSideComponent implements OnInit {
       console.log('EditorSideComponent.refresh insideTimeout');
       this.initialized = true;
       this.diagramSourceUpdated.emit(this.item);
-      this.loadingEvent.emit(false);
+      this.diagramLoadingEvent.emit({busy: false, loadedDiagramName: this.item.name});
       console.log('EditorSideComponent.refresh endOfTimeout');
     }, 100);
 
@@ -121,7 +125,7 @@ export class EditorSideComponent implements OnInit {
 
   public async onSubmit(): Promise<void> {
     // console.log('EditorSideComponent.onSubmit');
-    this.loadingEvent.emit(true);
+    this.diagramLoadingEvent.emit({busy: true});
 
     const diagram: DiagramItem = {
       id: this.item.id,
@@ -140,7 +144,7 @@ export class EditorSideComponent implements OnInit {
       this.form.markAsPristine();
     });
     await this.diagramSourceUpdated.emit(diagram);
-    this.loadingEvent.emit(false);
+    this.diagramLoadingEvent.emit({busy: false, loadedDiagramName: this.item.name});
   }
 
   @HostListener('window:keydown.control.enter', ['$event'])

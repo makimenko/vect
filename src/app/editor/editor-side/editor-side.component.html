@@ -2,7 +2,8 @@
 
   <mat-form-field class="source" color="primary" [@diagramStatus]="diagramStatus">
     <mat-label>Diagram source code</mat-label>
-    <textarea matInput cdkTextareaAutosize formControlName="diagramSource" [readonly]="!initialized"></textarea>
+    <textarea matInput cdkTextareaAutosize formControlName="diagramSource" [readonly]="!initialized" spellcheck="false">
+    </textarea>
   </mat-form-field>
   <mat-error matSuffix *ngIf="!diagramStatus">Error in diagram code</mat-error>
   <button #submitButton mat-raised-button type="submit"
