@@ -1,137 +1,157 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import TokenClient = google.accounts.oauth2.TokenClient;
+import {DynamicScriptLoaderService} from './dynamic-script-loader.service';
+import {GoogleDriveService} from '../../data-access/service/google-drive.service';
+
+export type Profile = {
+  name: string,
+  email: string,
+};
+
+const AUTH_KEY = 'vect.AuthService.auth';
+declare let gapi: any;
+const GOOGLE_PROFILE_URL = `https://www.googleapis.com/oauth2/v3/userinfo`;
 
 
 @Injectable()
 export class AuthService {
 
+  public authenticatedEvent = new EventEmitter<Profile>();
+
   tokenClient!: TokenClient;
+  accessToken?: string;
 
-  authInited = false;
-  gapiInited = false;
-  userSignedIn = false;
+  inited = false;
+  userAuthenticated = false;
 
-  private profile: any;
-  public name!: string;
-  public email!: string;
-  private authenticated!: EventEmitter<any>;
+  public profile?: Profile;
 
-  constructor() {
-    this.handleAuthResponse = this.handleAuthResponse.bind(this);
+  constructor(
+    protected dynamicScriptLoader: DynamicScriptLoaderService
+  ) {
+    this.handleTokenResponse = this.handleTokenResponse.bind(this);
     this.handleProfileResponse = this.handleProfileResponse.bind(this);
   }
 
 
-  /**
-   * Callback after Google Identity Services are loaded.
-   */
-  googleOAuthInit() {
+  public async checkIfUserAuthenticated(): Promise<boolean> {
+    console.log('AuthService.checkIfUserAuthenticated before', this.userAuthenticated);
+    if (!this.userAuthenticated) {
+      await this.init();
+      const storedAccessToken = localStorage.getItem(AUTH_KEY);
+      if (storedAccessToken) {
+        await this.requestProfile(storedAccessToken);
+        this.accessToken = storedAccessToken;
+      }
+    }
+    console.log('AuthService.checkIfUserAuthenticated after', this.userAuthenticated);
+    return this.userAuthenticated;
+  }
+
+
+  protected async init(): Promise<void> {
+    if (!this.inited) {
+      await this.initGoogleScripts();
+      console.log('AuthService.initialize google scripts loaded');
+      this.initTokenClient();
+    }
+  }
+
+  protected initGoogleScripts(): Promise<any> {
+    console.log('AuthService.initGoogleScripts');
+    const p1 = this.dynamicScriptLoader.loadScript('https://accounts.google.com/gsi/client');
+    const p2 = this.dynamicScriptLoader.loadScript('https://apis.google.com/js/api.js');
+    const p3 = this.dynamicScriptLoader.loadScript('https://apis.google.com/js/client:plusone.js');
+    return Promise.all([p1, p2, p3]);
+  }
+
+
+  protected initTokenClient(): void {
+    console.log('AuthService.initTokenClient');
     this.tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: environment.gapi.client_id,
       scope: environment.gapi.scope,
-      callback: this.handleAuthResponse
+      callback: this.handleTokenResponse
     });
-    this.authInited = true;
-    console.log("GoogleUtils.gisLoaded inited")
+    this.inited = true;
   }
 
-
-  async handleAuthResponse(res: any) {
+  private async handleTokenResponse(res: any): Promise<void> {
+    console.log('AuthService.handleTokenResponse', res);
     if (res.error !== undefined) {
-      this.userSignedIn = false;
+      this.userAuthenticated = false;
       throw (res);
     }
-    console.log("GoogleUtils.handleAuthClick resp", res);
-    this.requestProfile(res.access_token)
-
     if (res && res.access_token) {
-      gapi.client.setApiKey(environment.gapi.api_key);
-      gapi.client.load('drive', 'v3');
-      // await gapi.client.init({
-      //   apiKey: environment.gapi.api_key,
-      //   discoveryDocs: environment.gapi.discoveryDocs,
-      // });
-      this.gapiInited = true;
-    }
+      await this.requestProfile(res.access_token);
 
+      // wrong location?
+      // gapi.client.setApiKey(environment.gapi.api_key);
+      // gapi.client.load('drive', 'v3');
+
+      this.accessToken = res.access_token;
+      localStorage.setItem(AUTH_KEY, res.access_token);
+    }
   }
 
 
-  requestProfile(accessToken: any) {
-    console.log("getUserProfileData", accessToken)
-    let promise = new Promise(function (resolve, reject) {
-      let request = new XMLHttpRequest();
-      const url = `https://www.googleapis.com/oauth2/v3/userinfo`;
-      request.addEventListener("loadend", function () {
+  async requestProfile(accessToken: string): Promise<void> {
+    console.log('AuthService.requestProfile', accessToken);
 
-        const response = JSON.parse(this.responseText);
-        console.log("getUserProfileData loadend response", response)
-
-        if (this.status === 200) {
-          resolve(response);
-        } else {
-          // @ts-ignore
-          reject(this, response);
-        }
-      });
-      request.open("GET", url, true);
-      request.setRequestHeader('Authorization', `Bearer ${accessToken}`);
-      request.send();
+    const res = await fetch(GOOGLE_PROFILE_URL, {
+      method: 'get',
+      headers: new Headers({
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      })
     });
 
-    console.log("getUserProfileData then");
-
-    promise.then(
-      this.handleProfileResponse, function (errorMessage) {
-        console.error(errorMessage);
-      });
-
-  }
-
-  handleProfileResponse(profileResponse: any) {
-    this.profile = profileResponse;
-    this.email = profileResponse.email;
-    this.name = profileResponse.name;
-    this.userSignedIn = true;
-    this.authenticated.emit(this.profile);
-    console.log("getUserProfileData response", profileResponse);
+    if (res.ok) {
+      const profileResponse = await res.json();
+      await this.handleProfileResponse(profileResponse);
+    }
+    console.log('AuthService.requestProfile end');
   }
 
 
-  /**
-   *  Sign in the user upon button click.
-   */
-  handleAuthClick() {
-    const token = gapi.client.getToken()
+  private async handleProfileResponse(profileResponse: any) {
+    console.log('AuthService.handleProfileResponse response', profileResponse);
+    this.profile = {
+      name: profileResponse.name,
+      email: profileResponse.email
+    };
+    this.userAuthenticated = true;
+    console.log('AuthService.handleProfileResponse authenticatedEvent.emit', this.profile);
+    this.authenticatedEvent.emit(this.profile);
+  }
+
+
+  handleAuthClick(): void {
+    const token = gapi.client.getToken();
     if (token) {
-      console.log("AuthService.handleAuthClick Skip")
+      console.log('AuthService.handleAuthClick Skip');
       // Skip display of account chooser and consent dialog for an existing session.
-      this.tokenClient.requestAccessToken({prompt: '', login_hint: 'Super Hint!'});
+      this.tokenClient.requestAccessToken({prompt: '', state: AUTH_KEY});
     } else {
-      console.log("AuthService.handleAuthClick Prompt the user to select")
+      console.log('AuthService.handleAuthClick Prompt the user to select');
       // Prompt the user to select a Google Account and ask for consent to share their data
       // when establishing a new session.
-      this.tokenClient.requestAccessToken({prompt: 'consent'});
+      this.tokenClient.requestAccessToken({prompt: 'consent', state: AUTH_KEY});
     }
   }
 
 
-  initialize(authenticated: EventEmitter<any>) {
-    this.authenticated = authenticated;
-    this.googleOAuthInit();
+  public async getAuthorizationHeader(): Promise<string> {
+    if (await this.checkIfUserAuthenticated()) {
+      return 'Bearer ' + this.accessToken;
+    } else {
+      throw new Error('User is not authenticated');
+    }
   }
 
-  checkIfUserAuthenticated() {
-    console.log("AuthService.checkIfUserAuthenticated", this.userSignedIn)
-
-    return this.userSignedIn;
-  }
-
-  public getAuthorizationHeader(): string {
-    const token = gapi.auth.getToken();
-    // @ts-ignore
-    return token.token_type + ' ' + token.access_token;
+  public get allowToSignIn(): boolean {
+    return this.inited;
   }
 
 }

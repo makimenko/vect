@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {AuthService} from "./general/service/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {AuthService} from './general/service/auth.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,14 +14,16 @@ export class AppComponent implements OnInit {
     private auth: AuthService,
     private router: Router
   ) {
-    console.log("AppComponent.constructor")
+    console.log('AppComponent.constructor');
   }
 
-  ngOnInit() {
-    if (this.auth.userSignedIn) {
-      this.router.navigate(["/manager"])
-    } else {
-      this.router.navigate(["/login"])
-    }
+  async ngOnInit() {
+    // console.log("AppComponent.ngOnInit");
+    // if (!await this.auth.checkIfUserAuthenticated()) {
+    //   this.router.navigate(['/login']);
+    // }
+    // console.log("AppComponent.ngOnInit end");
   }
+
+
 }

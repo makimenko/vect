@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthService} from '../../general/service/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {DiagramMetadata} from '../model/diagram-item.model';
+import {environment} from '../../../environments/environment';
 
 declare let gapi: any;
 
@@ -49,7 +50,11 @@ export class GoogleDriveService {
 
   public async init(): Promise<void> {
     if (!this.initialized) {
-      // console.log('GoogleDriveService.init');
+      console.log('GoogleDriveService.init token', this.auth.accessToken);
+      gapi.client.setToken({access_token: this.auth.accessToken});
+      gapi.client.setApiKey(environment.gapi.api_key);
+      gapi.client.load('drive', 'v3');
+
       await gapi.client.load('drive', 'v3');
       this.initialized = true;
     }
@@ -99,7 +104,7 @@ export class GoogleDriveService {
       const endpoint = 'https://www.googleapis.com/upload/drive/v3/files/' + id + '?uploadType=multipart&fields=id';
       return this.http.patch(endpoint, form, {
         headers: {
-          Authorization: this.auth.getAuthorizationHeader()
+          Authorization: await this.auth.getAuthorizationHeader()
         }
       }).toPromise();
     } else {
@@ -108,7 +113,7 @@ export class GoogleDriveService {
       const endpoint = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id';
       return this.http.post(endpoint, form, {
         headers: {
-          Authorization: this.auth.getAuthorizationHeader()
+          Authorization: await this.auth.getAuthorizationHeader()
         }
       }).toPromise();
     }
