@@ -11,6 +11,7 @@
       ]
     },
     "array-type": false,
+    "only-arrow-functions": false,
     "arrow-return-shorthand": true,
     "curly": true,
     "deprecation": {
@@ -65,7 +66,7 @@
       "as-needed"
     ],
     "quotemark": [
-      true,
+      false,
       "single"
     ],
     "semicolon": {
@@ -82,10 +83,7 @@
         "named": "never"
       }
     },
-    "typedef": [
-      true,
-      "call-signature"
-    ],
+    "typedef": [],
     "typedef-whitespace": {
       "options": [
         {

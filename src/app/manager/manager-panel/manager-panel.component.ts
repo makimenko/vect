@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AuthService} from '../../general/service/auth.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AuthService, Profile} from '../../general/service/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {NewDiagramDialogComponent, NewDiagramDialogData} from '../new-diagram-dialog/new-diagram-dialog.component';
 import {DiagramService} from '../../data-access/service/diagram.service';
@@ -14,15 +14,19 @@ import {DiagramItem} from '../../data-access/model/diagram-item.model';
 })
 export class ManagerPanelComponent implements OnInit {
 
+  @Input() name = '';
+
   @Output() loadingEvent = new EventEmitter<boolean>();
 
   constructor(
     public auth: AuthService,
     protected dialog: MatDialog,
     protected diagramService: DiagramService,
-    private router: Router,
-    protected templateService: TemplateService
+    private router: Router
   ) {
+    this.auth.authenticatedEvent.subscribe({
+      next: (value: Profile) => this.name = value.name
+    });
   }
 
   ngOnInit(): void {
