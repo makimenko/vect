@@ -6,6 +6,9 @@
   <mat-form-field>
     <mat-label>User Name</mat-label>
     <input matInput [value]="name" readonly>
+    <button mat-icon-button matSuffix (click)="auth.logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
   </mat-form-field>
 </form>
 

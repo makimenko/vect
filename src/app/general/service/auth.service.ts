@@ -3,6 +3,7 @@ import {environment} from '../../../environments/environment';
 import TokenClient = google.accounts.oauth2.TokenClient;
 import {DynamicScriptLoaderService} from './dynamic-script-loader.service';
 import {GoogleDriveService} from '../../data-access/service/google-drive.service';
+import {Router} from '@angular/router';
 
 export type Profile = {
   name: string,
@@ -28,7 +29,8 @@ export class AuthService {
   public profile?: Profile;
 
   constructor(
-    protected dynamicScriptLoader: DynamicScriptLoaderService
+    protected dynamicScriptLoader: DynamicScriptLoaderService,
+    private router: Router
   ) {
     this.handleTokenResponse = this.handleTokenResponse.bind(this);
     this.handleProfileResponse = this.handleProfileResponse.bind(this);
@@ -85,11 +87,6 @@ export class AuthService {
     }
     if (res && res.access_token) {
       await this.requestProfile(res.access_token);
-
-      // wrong location?
-      // gapi.client.setApiKey(environment.gapi.api_key);
-      // gapi.client.load('drive', 'v3');
-
       this.accessToken = res.access_token;
       localStorage.setItem(AUTH_KEY, res.access_token);
     }
@@ -152,6 +149,15 @@ export class AuthService {
 
   public get allowToSignIn(): boolean {
     return this.inited;
+  }
+
+  public logout() {
+    console.log('AuthService.Logout');
+    localStorage.removeItem(AUTH_KEY);
+    this.userAuthenticated = false;
+    this.accessToken = undefined;
+    this.profile = undefined;
+    this.router.navigate(["/login"]);
   }
 
 }

@@ -56,5 +56,4 @@ export class ManagerPanelComponent implements OnInit {
     });
   }
 
-
 }
