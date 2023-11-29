@@ -10,8 +10,9 @@ export type Profile = {
 };
 
 const AUTH_KEY = 'vect.AuthService.auth';
-
 declare let gapi: any;
+const GOOGLE_PROFILE_URL = `https://www.googleapis.com/oauth2/v3/userinfo`;
+
 
 @Injectable()
 export class AuthService {
@@ -34,18 +35,18 @@ export class AuthService {
   }
 
 
-   public async checkIfUserAuthenticated(): Promise<boolean> {
-     console.log('AuthService.checkIfUserAuthenticated before', this.userAuthenticated);
-     if (!this.userAuthenticated) {
-       await this.init();
-       const storedAccessToken = localStorage.getItem(AUTH_KEY);
-       if (storedAccessToken) {
-         this.requestProfile(storedAccessToken);
-         this.accessToken = storedAccessToken;
-       }
-     }
-     console.log('AuthService.checkIfUserAuthenticated after', this.userAuthenticated);
-     return this.userAuthenticated;
+  public async checkIfUserAuthenticated(): Promise<boolean> {
+    console.log('AuthService.checkIfUserAuthenticated before', this.userAuthenticated);
+    if (!this.userAuthenticated) {
+      await this.init();
+      const storedAccessToken = localStorage.getItem(AUTH_KEY);
+      if (storedAccessToken) {
+        await this.requestProfile(storedAccessToken);
+        this.accessToken = storedAccessToken;
+      }
+    }
+    console.log('AuthService.checkIfUserAuthenticated after', this.userAuthenticated);
+    return this.userAuthenticated;
   }
 
 
@@ -83,7 +84,7 @@ export class AuthService {
       throw (res);
     }
     if (res && res.access_token) {
-      this.requestProfile(res.access_token);
+      await this.requestProfile(res.access_token);
 
       // wrong location?
       // gapi.client.setApiKey(environment.gapi.api_key);
@@ -95,36 +96,26 @@ export class AuthService {
   }
 
 
-  requestProfile(accessToken: string): void {
+  async requestProfile(accessToken: string): Promise<void> {
     console.log('AuthService.requestProfile', accessToken);
-    const p1 = new Promise(function(resolve, reject) {
-      const req = new XMLHttpRequest();
-      const url = `https://www.googleapis.com/oauth2/v3/userinfo`;
-      req.addEventListener('loadend', function() {
-        const response = JSON.parse(this.responseText);
-        console.log('AuthService.requestProfile loadend response', response);
-        if (this.status === 200) {
-          resolve(response);
-        } else {
-          // @ts-ignore
-          reject(this, response);
-        }
-      });
-      req.open('GET', url, true);
-      req.setRequestHeader('Authorization', `Bearer ${accessToken}`);
-      req.send();
+
+    const res = await fetch(GOOGLE_PROFILE_URL, {
+      method: 'get',
+      headers: new Headers({
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      })
     });
 
-    console.log('AuthService.requestProfile then');
-    p1.then(
-      this.handleProfileResponse,
-      function(errorMessage) {
-        console.error(errorMessage);
-      });
-
+    if (res.ok) {
+      const profileResponse = await res.json();
+      await this.handleProfileResponse(profileResponse);
+    }
+    console.log('AuthService.requestProfile end');
   }
 
-  handleProfileResponse(profileResponse: any): void {
+
+  private async handleProfileResponse(profileResponse: any) {
     console.log('AuthService.handleProfileResponse response', profileResponse);
     this.profile = {
       name: profileResponse.name,

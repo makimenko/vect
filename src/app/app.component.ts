@@ -18,13 +18,11 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("AppComponent.ngOnInit");
-    if (await this.auth.checkIfUserAuthenticated()) {
-      this.router.navigate(['/manager']);
-    } else {
-      this.router.navigate(['/login']);
-    }
-    console.log("AppComponent.ngOnInit end");
+    // console.log("AppComponent.ngOnInit");
+    // if (!await this.auth.checkIfUserAuthenticated()) {
+    //   this.router.navigate(['/login']);
+    // }
+    // console.log("AppComponent.ngOnInit end");
   }
 
 

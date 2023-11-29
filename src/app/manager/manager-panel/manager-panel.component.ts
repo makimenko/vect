@@ -24,14 +24,18 @@ export class ManagerPanelComponent implements OnInit {
     protected diagramService: DiagramService,
     private router: Router
   ) {
-    this.auth.authenticatedEvent.subscribe({
-      next: (value: Profile) => this.name = value.name
-    });
   }
 
   ngOnInit(): void {
+    if (this.auth.profile) {
+      this.updateProfileInfo(this.auth.profile);
+    }
   }
 
+  updateProfileInfo(profile: Profile) {
+    console.log('ManagerPanelComponent.handleProfileUpdate');
+    this.name = profile.name;
+  }
 
   public createNewDiagram(): void {
     // console.log('ManagerPanelComponent.createNewDiagram');
