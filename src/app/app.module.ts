@@ -22,6 +22,16 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {DynamicScriptLoaderService} from './general/service/dynamic-script-loader.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {
+  AtftCameraModule,
+  AtftControlModule,
+  AtftDataCenterActorModule, AtftEffectModule,
+  AtftLightModule,
+  AtftMeshModule,
+  AtftObjectModule,
+  AtftRendererModule,
+  UxActorModule
+} from 'atft';
 
 
 @NgModule({
@@ -37,7 +47,16 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    AtftCameraModule,
+    AtftControlModule,
+    AtftDataCenterActorModule,
+    AtftLightModule,
+    AtftMeshModule,
+    AtftObjectModule,
+    AtftRendererModule,
+    AtftEffectModule,
+    UxActorModule
   ],
   declarations: [
     AppComponent,

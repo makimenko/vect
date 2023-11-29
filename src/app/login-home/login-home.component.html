@@ -1,3 +1,20 @@
+<atft-renderer-canvas>
+  <atft-orthographic-camera [positionX]=0 [positionY]=0 [positionZ]="100" [zoom]="4">
+  </atft-orthographic-camera>
+  <!-- Background -->
+  <atft-scene name="backgroundScene" background="0x000051">
+    <atft-effect-composer [renderToScreen]="false" [sceneBackgroundTarget]="mainScene">
+      <atft-blur></atft-blur>
+    </atft-effect-composer>
+    <atft-point-light [intensity]="0.4" [distance]="1000" [translateX]="-60" [translateY]="-60"
+                      [translateZ]="50"></atft-point-light>
+    <atft-loader-actor materialColor="#F0F0F0"></atft-loader-actor>
+  </atft-scene>
+  <!-- Foreground -->
+  <atft-scene name="scene" #mainScene atft-stats-auto-show>
+  </atft-scene>
+</atft-renderer-canvas>
+
 <mat-grid-list cols="1" rowHeight="100%" class="grid">
   <mat-grid-tile>
     <mat-card class="card">
@@ -7,12 +24,13 @@
       <mat-card-content>
         <p>
           The Vect application is serverless.
-          Diagrams are stored on your personal Google drive (several YAML files under /Vect folder).
+          Your diagrams will be stored on personal Google drive (several YAML files under /Vect folder).
           Please login to your account and permit access to Google Drive to continue.
         </p>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button [disabled]="!authService.allowToSignIn" mat-button color="warn" mat-raised-button #btnFocus=matButton [autofocus]="btnFocus.focus()" (click)="handleAuthClick()">Google Login</button>
+        <button [disabled]="!authService.allowToSignIn" mat-raised-button #btnFocus=matButton
+                [autofocus]="btnFocus.focus()" (click)="handleAuthClick()">Google Login</button>
       </mat-card-actions>
     </mat-card>
   </mat-grid-tile>
