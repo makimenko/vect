@@ -21,6 +21,10 @@ export class EditorLayoutComponent implements OnInit, ComponentCanDeactivate {
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      console.log("EditorLayoutComponent.ngOnInit emit resize event");
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
   }
 
   @HostListener('window:beforeunload')
