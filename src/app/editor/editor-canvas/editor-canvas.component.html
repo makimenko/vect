@@ -12,11 +12,11 @@
                        material="phong" [receiveShadow]="false" [heightSegments]=1 [widthSegments]="1" [translateZ]="-0.1">
       </atft-plane-mesh>
 
-      <atft-hemisphere-light name="hemi-light" skyColor="#ffffff" groundColor="#ffffff" [intensity]="0.4"
+      <atft-hemisphere-light name="hemi-light" skyColor="#ffffff" groundColor="#ffffff" [intensity]="1"
                              [translateX]="-20" [translateY]="-20" [translateZ]="100">
       </atft-hemisphere-light>
 
-      <atft-point-light name="point-light" [intensity]="0.8"
+      <atft-point-light name="point-light" [intensity]="30000"
                         [translateX]="-100" [translateY]="-100" [translateZ]="200" [castShadow]="true">
       </atft-point-light>
 
