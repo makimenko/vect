@@ -2,12 +2,10 @@
   <atft-orthographic-camera [positionX]=0 [positionY]=0 [positionZ]="100" [zoom]="4">
   </atft-orthographic-camera>
   <!-- Background -->
-  <atft-scene name="backgroundScene" background="#000051">
+  <atft-scene name="backgroundScene" background="#fafafa">
     <atft-effect-composer [renderToScreen]="false" [sceneBackgroundTarget]="mainScene">
       <atft-blur></atft-blur>
     </atft-effect-composer>
-    <atft-point-light [intensity]="0.4" [distance]="1000" [translateX]="-60" [translateY]="-60"
-                      [translateZ]="50"></atft-point-light>
     <atft-loader-actor materialColor="#F0F0F0"></atft-loader-actor>
   </atft-scene>
   <!-- Foreground -->
