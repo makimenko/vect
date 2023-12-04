@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/makimenko/vect/compare/v0.0.5...v0.0.6) (2023-12-04)
+
+
+### Features
+
+* upgrade to Angular 17 ([cc4566a](https://github.com/makimenko/vect/commit/cc4566ad9b28277f863c3f382339dd368bfd25ba))
+
+
+### Bug Fixes
+
+* disable cli analytics ([5e6c934](https://github.com/makimenko/vect/commit/5e6c93422c8f0e058647175a75fd62bd40527153))
+* loader background color ([c6ade57](https://github.com/makimenko/vect/commit/c6ade5755ddfb0ed8b5a5b33a38d9674aed2777a))
+
 ### [0.0.5](https://github.com/makimenko/vect/compare/v0.0.4...v0.0.5) (2023-11-30)
 
 
